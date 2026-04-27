@@ -1,33 +1,58 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 
-function TodoForm({ setTodoList }) {
-  const [todoTitle, setTodoTitle] = useState('')
+// function TodoForm({ setTodoList }) {
+function TodoForm({ onAddTodo }) {
+  // const [todoTitle, setTodoTitle] = useState('')
+  const inputRef = useRef()
 
   // add handle function for submit event
-  function handleSubmit(e) {
+  // function handleSubmit(e) {
+  //   e.preventDefault()
+  //   if (todoTitle.trim() == '') return
+
+  //   // Create a new todo here
+  //   const newTodo = {
+  //     title: todoTitle,
+  //     id: Date.now(), // unique id here
+  //   }
+
+  //   // console.log(todoTitle)
+
+  //   setTodoList((prevTodoList) => [...prevTodoList, newTodo])
+  //   setTodoTitle('')
+  // }
+
+  const handleAddTodo = (e) => {
     e.preventDefault()
-    if (todoTitle.trim() == '') return
 
-    // Create a new todo here
-    const newTodo = {
-      title: todoTitle,
-      id: Date.now(), // unique id here
+    // Explore the event object (we'll remove this later)
+    // console.log('Event object:', e)
+    // console.log('Event target:', e.target)
+    // console.log('Input value:', e.target.todoTitle.value)
+
+    // .trim prevents whitespace only todos
+    const todoTitle = e.target.todoTitle.value.trim()
+    // if todoTitle exists AND does NOT equal EMPTY STRING
+    if (todoTitle && todoTitle !== '') {
+      // call the onAddTodo function, provide the todoTitle
+      onAddTodo(todoTitle)
+      // reset something
+      e.target.reset()
+      // useRef to use the current value and focus on the input form
+      inputRef.current.focus()
     }
-
-    // console.log(todoTitle)
-
-    setTodoList((prevTodoList) => [...prevTodoList, newTodo])
-    setTodoTitle('')
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleAddTodo}>
       <label htmlFor="todoTitle">Todo</label>
       <input
+        ref={inputRef}
         type="text"
         id="todoTitle"
-        value={todoTitle}
-        onChange={(e) => setTodoTitle(e.target.value)}
+        name="todoTitle"
+        placeholder={'Todo text'}
+        required
       />
       <button type="submit">Add Todo</button>
     </form>
