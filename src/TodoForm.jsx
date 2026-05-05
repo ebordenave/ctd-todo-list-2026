@@ -1,8 +1,9 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 // function TodoForm({ setTodoList }) {
 function TodoForm({ onAddTodo }) {
-  // const [todoTitle, setTodoTitle] = useState('')
+  const [workingTodoTitle, setWorkingTodoTitle] = useState('')
+
   const inputRef = useRef()
 
   // add handle function for submit event
@@ -25,20 +26,10 @@ function TodoForm({ onAddTodo }) {
   const handleAddTodo = (e) => {
     e.preventDefault()
 
-    // Explore the event object (we'll remove this later)
-    // console.log('Event object:', e)
-    // console.log('Event target:', e.target)
-    // console.log('Input value:', e.target.todoTitle.value)
-
-    // .trim prevents whitespace only todos
-    const todoTitle = e.target.todoTitle.value.trim()
-    // if todoTitle exists AND does NOT equal EMPTY STRING
-    if (todoTitle && todoTitle !== '') {
-      // call the onAddTodo function, provide the todoTitle
-      onAddTodo(todoTitle)
-      // reset something
-      e.target.reset()
-      // useRef to use the current value and focus on the input form
+    if (workingTodoTitle.trim() && workingTodoTitle.trim() !== '') {
+      // call the onAddTodo function, provide the workingRodoTitle
+      onAddTodo(workingTodoTitle)
+      setWorkingTodoTitle('')
       inputRef.current.focus()
     }
   }
@@ -53,8 +44,12 @@ function TodoForm({ onAddTodo }) {
         name="todoTitle"
         placeholder={'Todo text'}
         required
+        value={workingTodoTitle}
+        onChange={(e) => setWorkingTodoTitle(e.target.value)}
       />
-      <button type="submit">Add Todo</button>
+      <button type="submit" disabled={!workingTodoTitle.trim()}>
+        Add Todo
+      </button>
     </form>
   )
 }
