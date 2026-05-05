@@ -47,7 +47,7 @@ function App() {
       <h1>My Todos</h1>
       {/* <TodoForm setTodoList={setTodoList} onAddTodo={addTodo} /> */}
       <TodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onComplete={completeTodo} />
+      <TodoList todoList={todoList} onCompleteTodo={completeTodo} />
     </div>
   )
 }
