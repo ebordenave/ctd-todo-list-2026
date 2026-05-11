@@ -1,7 +1,5 @@
 import { TodoListItem } from './TodoListItem'
-// Filter Completed Todos
-// In TodoList.jsx, create a filteredTodoList constant that filters out todos where isCompleted is true
-// Replace all references to todoList in the JSX with filteredTodoList
+
 function TodoList({ todoList, onCompleteTodo }) {
   const filteredTodoList = todoList.filter((todo) => !todo.isCompleted)
   return (
