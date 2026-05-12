@@ -1,6 +1,8 @@
 import { TodoListItem } from './TodoListItem'
+// In TodoList, destructure that helper out of the
+// component's props then pass it to TodoListItem in the same manner.
 
-function TodoList({ todoList, onCompleteTodo }) {
+function TodoList({ todoList, onCompleteTodo, onUpdateTodo }) {
   const filteredTodoList = todoList.filter((todo) => !todo.isCompleted)
   return (
     <div>
@@ -13,6 +15,7 @@ function TodoList({ todoList, onCompleteTodo }) {
               todo={todo}
               key={todo.id}
               onCompleteTodo={onCompleteTodo}
+              onUpdateTodo={onUpdateTodo}
             />
           ))}
         </ul>

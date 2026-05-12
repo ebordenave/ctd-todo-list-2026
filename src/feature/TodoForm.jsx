@@ -11,7 +11,7 @@ function TodoForm({ onAddTodo }) {
     e.preventDefault()
 
     if (workingTodoTitle.trim() && workingTodoTitle.trim() !== '') {
-      // call the onAddTodo function, provide the workingRodoTitle
+      // call the onAddTodo function, provide the workingTodoTitle
       onAddTodo(workingTodoTitle)
       setWorkingTodoTitle('')
       inputRef.current.focus()
@@ -27,7 +27,7 @@ function TodoForm({ onAddTodo }) {
         onChange={(e) => setWorkingTodoTitle(e.target.value)}
         labelText={'Todo'}
       />
-      <button type="submit" disabled={isValidTodoTitle}>
+      <button type="submit" disabled={!isValidTodoTitle(workingTodoTitle)}>
         Add Todo
       </button>
     </form>
