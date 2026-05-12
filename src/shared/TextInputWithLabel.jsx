@@ -1,6 +1,3 @@
-// Add a label and an input that are wrapped in a React fragment to the
-// return statement. Don't worry about props for now.
-
 function TextInputWithLabel({ elementId, ref, onChange, labelText, value }) {
   return (
     <>
