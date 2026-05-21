@@ -1,65 +1,23 @@
-import './App.css'
 import { useState } from 'react'
-import TodoList from './features/TodoList/TodoList'
-import TodoForm from './features/TodoForm'
+import './App.css'
+import Logon from './features/Logon'
+import TodosPage from './features/Todos/TodosPage'
+import Header from './shared/Header'
 
 function App() {
-  const [todoList, setTodoList] = useState([])
-
-  /**
-   * @param {string} todoTitle
-   */
-  function addTodo(todoTitle) {
-    // Creates a new todo object
-    // with an id property set to Date.now() and a title
-    // property set to the todoTitle parameter
-    const newTodoObject = {
-      id: Date.now(),
-      title: todoTitle,
-      isCompleted: false,
-    }
-    // Updating the todoList functionally ( because current state relies on previous state )
-    setTodoList((previous) => [newTodoObject, ...previous])
-  }
-
-  function completeTodo(id) {
-    const newTodoList = todoList.map((todo) => {
-      // if it matches
-      if (todo.id === id) {
-        return { ...todo, isCompleted: true }
-      } else {
-        return todo
-      }
-    })
-    // update the todolist state with the resulting array
-    setTodoList(newTodoList)
-  }
-
-  function updateTodo(editedTodo) {
-    const { id } = editedTodo
-    setTodoList((prevTodoList) =>
-      prevTodoList.map((todo) =>
-        todo.id !== id ? todo : { ...todo, ...editedTodo, id: todo.id },
-      ),
-    )
-  }
+  const [email, setEmail] = useState('')
+  const [token, setToken] = useState('')
 
   return (
-    <div>
-      <h1>My Todos</h1>
-
-      <TodoForm onAddTodo={addTodo} />
-      <TodoList
-        todoList={todoList}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-      />
-    </div>
+    <>
+      <Header token={token} onSetToken={setToken} onSetEmail={setEmail} />
+      {token ? (
+        <TodosPage token={token} />
+      ) : (
+        <Logon onSetToken={setToken} onSetEmail={setEmail} />
+      )}
+    </>
   )
 }
 
 export default App
-
-// Update Todo Data Structure
-// In App.jsx, find the addTodo function and update the new todo object to include an isCompleted property set to false
-// Each todo should now have three properties: id, title, and isCompleted
