@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Logon({ onSetEmail, onSetToken }) {
+function Logon({ onSetEmail = () => {}, onSetToken = () => {} }) {
   const initialValue = ''
   //   note to self: getter is that var/values, setter is the function
   const [email, setEmail] = useState(initialValue)
@@ -63,7 +63,7 @@ function Logon({ onSetEmail, onSetToken }) {
           />
         </div>
         <button type="submit" disabled={isLoggingOn}>
-          {isLoggingOn ? 'Signing in…' : 'Sign in'}
+          {isLoggingOn ? 'Logging in' : 'Log On'}
         </button>
       </form>
     </div>

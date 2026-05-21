@@ -45,7 +45,7 @@ function TodosPage({ token }) {
 
         // on successful
         const data = await response.json()
-        setTodoList(data)
+        setTodoList(data.task)
       } catch (error) {
         setError(error.message)
         setTodoList([])
@@ -155,12 +155,56 @@ function TodosPage({ token }) {
     }
   }
 
+  // async function completeTodo(id) {
+  //   // Store the original todo before making changes (for potential rollback)
+  //   setTodoList((currentTodos) =>
+  //     currentTodos.map((todo) => {
+  //       if (todo.id === id) {
+  //         // Optimistically update the todo as completed in state
+  //         return { ...todo, isCompleted: true }
+  //       } else {
+  //         return todo
+  //       }
+  //     }),
+  //   )
+
+  //   // try-catch
+  //   try {
+  //     const response = await fetch(`/api/tasks/${id}`, {
+  //       method: 'PATCH',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'X-CSRF-TOKEN': token,
+  //       },
+  //       credentials: 'include',
+  //       body: JSON.stringify({ isCompleted: true }),
+  //     })
+
+  //     // On failure: rollback to the original todo and set error message
+  //     if (!response.ok) {
+  //       throw new Error('Failed to update task status on the server.')
+  //     }
+  //   } catch (error) {
+  //     setError(error.message)
+  //     setTodoList((currentTodos) =>
+  //       currentTodos.map((todo) => {
+  //         if (todo.id === id) {
+  //           return { ...todo, isCompleted: false }
+  //         } else {
+  //           return todo
+  //         }
+  //       }),
+  //     )
+  //   }
+  // }
+
   async function completeTodo(id) {
-    // Store the original todo before making changes (for potential rollback)
+    let originalTodo = null
+
     setTodoList((currentTodos) =>
       currentTodos.map((todo) => {
         if (todo.id === id) {
-          // Optimistically update the todo as completed in state
+          originalTodo = { ...todo }
           return { ...todo, isCompleted: true }
         } else {
           return todo
@@ -168,8 +212,9 @@ function TodosPage({ token }) {
       }),
     )
 
-    // try-catch
     try {
+      const createdAtValue = originalTodo ? originalTodo.createdAt : undefined
+
       const response = await fetch(`/api/tasks/${id}`, {
         method: 'PATCH',
         headers: {
@@ -177,10 +222,13 @@ function TodosPage({ token }) {
           'X-CSRF-TOKEN': token,
         },
         credentials: 'include',
-        body: JSON.stringify({ isCompleted: true }),
+
+        body: JSON.stringify({
+          isCompleted: true,
+          createdAt: createdAtValue,
+        }),
       })
 
-      // On failure: rollback to the original todo and set error message
       if (!response.ok) {
         throw new Error('Failed to update task status on the server.')
       }
@@ -188,8 +236,8 @@ function TodosPage({ token }) {
       setError(error.message)
       setTodoList((currentTodos) =>
         currentTodos.map((todo) => {
-          if (todo.id === id) {
-            return { ...todo, isCompleted: false }
+          if (todo.id === id && originalTodo) {
+            return originalTodo
           } else {
             return todo
           }
@@ -199,44 +247,43 @@ function TodosPage({ token }) {
   }
 
   async function updateTodo(editedTodo) {
-    // Store the original todo for rollback
-    const copyOfOriginalTodo = { ...editedTodo }
-    // Optimistically apply the edited todo to state
+    let originalTodo = null
+
     setTodoList((currentTodos) => {
       return currentTodos.map((todo) => {
-        if (editedTodo.id === todo.id) {
+        if (todo.id === editedTodo.id) {
+          originalTodo = { ...todo }
           return editedTodo
         } else {
           return todo
         }
       })
     })
+
     try {
       const response = await fetch(`/api/tasks/${editedTodo.id}`, {
-        // Make a PATCH request to /api/tasks/${editedTodo.id} with:
         method: 'PATCH',
-        // Same headers pattern
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': token,
         },
         credentials: 'include',
-        // JSON body containing title and isCompleted with associated values
         body: JSON.stringify({
           title: editedTodo.title,
           isCompleted: editedTodo.isCompleted,
         }),
       })
-      // On failure: rollback to original todo and show error message
+
       if (!response.ok) {
         throw new Error('Failed to update task status on the server.')
       }
     } catch (error) {
       setError(error.message)
+
       setTodoList((currentTodos) =>
         currentTodos.map((todo) => {
-          if (todo.id === editedTodo.id) {
-            return copyOfOriginalTodo
+          if (todo.id === editedTodo.id && originalTodo) {
+            return originalTodo
           } else {
             return todo
           }
@@ -249,21 +296,18 @@ function TodosPage({ token }) {
   //   setError(null)
   // }
 
-  // Complete the TodosPage Return Statement
-  // Update the JSX return to include:
   return (
     <div>
-      {/* // Error display section above the form that shows when error state exists, with a "Clear Error" button */}
       {error && (
         <div>
-          <p>{`${error.message}`}</p>
-          <button onClick={() => setError(null)} type="button">
+          <p>{error}</p>
+
+          <button onClick={() => setError('')} type="button">
             Clear Error
           </button>
         </div>
       )}
 
-      {/* // Loading indicator above the form that shows when isTodoListLoading is true */}
       {isTodoListLoading && <div>Loading...</div>}
 
       <TodoForm onAddTodo={addTodo} />

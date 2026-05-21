@@ -1,5 +1,5 @@
-function Header({ token, onSetToken, onSetEmail }) {
-  return <h1>My Todos</h1>
+function Header() {
+  return <h1>Todo List</h1>
 }
 
 export default Header
