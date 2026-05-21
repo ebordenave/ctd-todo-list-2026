@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import TodoList from './TodoList/TodoList'
 import TodoForm from './TodoForm'
-import Logon from '../Logon'
+// import Logon from '../Logon'
 
 // Update src/features/Todos/TodosPage.jsx to add API data fetching
 // Update the component to accept and destructure the token prop: function TodosPage({ token })
@@ -45,7 +45,7 @@ function TodosPage({ token }) {
 
         // on successful
         const data = await response.json()
-        setTodoList(data.task)
+        setTodoList(data.tasks)
       } catch (error) {
         setError(error.message)
         setTodoList([])
@@ -271,6 +271,7 @@ function TodosPage({ token }) {
         body: JSON.stringify({
           title: editedTodo.title,
           isCompleted: editedTodo.isCompleted,
+          createdAt: editedTodo.createdAt,
         }),
       })
 
