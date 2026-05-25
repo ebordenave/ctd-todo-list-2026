@@ -1,8 +1,10 @@
 import { useEditableTitle } from '../../../hooks/useEditableTitle'
 import TextInputWithLabel from '../../../shared/TextInputWithLabel'
 import { isValidTodoTitle } from '../../../utils/todoValidation'
+import { useRef } from 'react'
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+  const inputRef = useRef()
   const {
     isEditing,
     workingTitle,
@@ -14,20 +16,6 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
 
   const handleEdit = (e) => updateTitle(e.target.value)
 
-  // function handleUpdate(e) {
-  //   // takes event object
-  //   // if isEditing is false, return immediately to exit the function
-  //   if (!isEditing) {
-  //     return
-  //   }
-  //   // calls event.preventDefault()
-  //   e.preventDefault()
-  //   // calls onUpdateTodo and pass in an object that destructures
-  //   // todo and sets the title equal to workingTitle.
-  //   onUpdateTodo({ ...todo, title: workingTitle })
-  //   // sets isEditing state value to false.
-  //   setIsEditing(false)
-  // }
   const handleUpdate = (e) => {
     if (!isEditing) return
     e.preventDefault()
@@ -43,8 +31,9 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             <TextInputWithLabel
               value={workingTitle}
               onChange={handleEdit}
-              elementId={todo.id}
-              labelText="Todo"
+              elementId={`editTodo-${todo.id}`}
+              labelText={'Todo'}
+              ref={inputRef}
             />
             <button type="button" onClick={cancelEdit}>
               Cancel
