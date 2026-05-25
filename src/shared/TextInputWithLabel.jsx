@@ -1,15 +1,9 @@
-function TextInputWithLabel({
-  elementId,
-  inputRef,
-  onChange,
-  labelText,
-  value,
-}) {
+function TextInputWithLabel({ elementId, ref, onChange, labelText, value }) {
   return (
     <>
       <label htmlFor={elementId}>{labelText}</label>
       <input
-        ref={inputRef}
+        ref={ref}
         type="text"
         id={elementId}
         value={value}
