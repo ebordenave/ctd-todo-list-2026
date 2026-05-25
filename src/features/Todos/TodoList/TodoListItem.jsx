@@ -1,8 +1,10 @@
 import { useEditableTitle } from '../../../hooks/useEditableTitle'
 import TextInputWithLabel from '../../../shared/TextInputWithLabel'
 import { isValidTodoTitle } from '../../../utils/todoValidation'
+import { useRef } from 'react'
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+  const inputRef = useRef()
   const {
     isEditing,
     workingTitle,
@@ -45,6 +47,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               onChange={handleEdit}
               elementId={`editTodo-${todo.id}`}
               labelText={'Todo'}
+              inputRef={inputRef}
             />
             <button type="button" onClick={cancelEdit}>
               Cancel
