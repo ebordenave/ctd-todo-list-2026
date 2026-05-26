@@ -13,11 +13,25 @@ function TodosPage({ token }) {
   const [sortDirection, setSortDirection] = useState('desc')
   const [filterTerm, setFilterTerm] = useState('')
 
+  // TODO:Add filter error state to TodosPage.jsx:
+  // Add a new state variable called filterError with an initial value of an empty string
+  // Use useState to create the state and setter function
+  const [filterError, setFilterError] = useState('')
+
   const debouncedFilterTerm = useDebounce(filterTerm, 300)
 
   const [dataVersion, setDataVersion] = useState(0)
 
   useEffect(() => {
+    // TODO: Update error handling in fetchTodos to distinguish error types:
+    // } catch (error) {
+    //   if (debouncedFilterTerm || sortBy !== 'creationDate' || sortDirection !== 'desc') {
+    //     setFilterError(`Error filtering/sorting todos: ${error.message}`);
+    //   } else {
+    //     setError(`Error fetching todos: ${error.message}`);
+    //   }
+    // } finally {
+
     async function fetchTodos() {
       const paramsObject = { sortBy, sortDirection }
 
@@ -51,9 +65,18 @@ function TodosPage({ token }) {
         const data = await response.json()
 
         setTodoList(data.tasks || data.task || [])
+        setFilterError('')
       } catch (error) {
-        setError(error.message)
-        setTodoList([])
+        if (
+          debouncedFilterTerm ||
+          sortBy !== 'creationDate' ||
+          sortDirection !== 'desc'
+        ) {
+          setFilterError(`Error filtering/sorting todos: ${error.message}`)
+        } else {
+          setError(`Error fetching todos: ${error.message}`)
+        }
+        setTodoList([]) //not sure if this is necessary
       } finally {
         setIsTodoListLoading(false)
       }
@@ -218,8 +241,41 @@ function TodosPage({ token }) {
     console.log('Invalidating memo cache after todo mutation')
   }, [])
 
+  // TODO: Add filter error UI after the elements for the existing error:
+  // Create a conditional block that displays when filterError has a value
+  // Inside the block, create a div containing:
+  // A paragraph element displaying the filter error message
+  // A "Clear Filter Error" button that calls setFilterError('') when clicked
+  // A "Reset Filters" button that when clicked:
+  // Clears the filter term: setFilterTerm('')
+  // Resets sort by: setSortBy('creationDate')
+  // Resets sort direction: setSortDirection('desc')
+  // Clears the filter error: setFilterError('')
+
   return (
     <div>
+      {filterError && (
+        <div>
+          <p>{filterError}</p>
+          <button
+            onClick={() => {
+              setFilterError('')
+            }}
+          >
+            Clear Error
+          </button>
+          <button
+            onClick={() => {
+              setFilterTerm('')
+              setSortBy('creationDate')
+              setSortDirection('desc')
+              setFilterError('')
+            }}
+          >
+            Reset Error
+          </button>
+        </div>
+      )}
       {error && (
         <div>
           <p>{error}</p>
