@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react'
 import TodoList from './TodoList/TodoList'
 import TodoForm from './TodoForm'
+import SortBy from '../../shared/SortBy'
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([])
   const [error, setError] = useState('')
   const [isTodoListLoading, setIsTodoListLoading] = useState(false)
 
+  // TODO:Add two new state variables after existing state: sortBy with initial value creationDate' and sortDirection with initial value 'desc'
+  const [sortBy, setSortBy] = useState('creationDate')
+  const [sortDirection, setSortDirection] = useState('desc')
+
   useEffect(() => {
     async function fetchTodos() {
+      // TODO: Modify the fetchTodos function to include sort parameters: Create a URLSearchParams object inside the function with sortBy and sortDirection properties Update the fetch URL to append the params to the base /tasks endpoint using template literals
+      const params = new URLSearchParams({
+        sortBy,
+        sortDirection,
+      })
+
       try {
         setIsTodoListLoading(true)
         setError('')
 
-        const response = await fetch('/api/tasks', {
+        const response = await fetch(`/api/tasks?${params}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -41,7 +52,8 @@ function TodosPage({ token }) {
       }
     }
     fetchTodos()
-  }, [token])
+    // TODO: Update useEffect dependencies to re-fetch when sort options change: Add sortBy and sortDirection to the dependency array alongside the existing token
+  }, [token, sortBy, sortDirection])
 
   async function addTodo(todoTitle) {
     const newTodoObject = {
@@ -198,7 +210,17 @@ function TodosPage({ token }) {
       )}
 
       {isTodoListLoading && <div>Loading...</div>}
-
+      {/* TODO: Integrate SortBy in TodosPage.jsx: Place the component above TodoForm in the JSX 
+      Pass the current sort state values and setState functions as props (recall the name of the props we added in the component definition) sortBy,
+  sortDirection,
+  onSortByChange,
+  onSortDirectionChange,*/}
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
       <TodoForm onAddTodo={addTodo} />
       <TodoList
         todoList={Array.isArray(todoList) ? todoList : []}
