@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import TodoList from './TodoList/TodoList'
 import TodoForm from './TodoForm'
 import SortBy from '../../shared/SortBy'
@@ -17,6 +17,9 @@ function TodosPage({ token }) {
   // TODO: Add filter state after existing state in TodosPage.jsx: Import useDebounce from your utils directory at the top of the file. Add the filter state variables:
   const [filterTerm, setFilterTerm] = useState('')
   const debouncedFilterTerm = useDebounce(filterTerm, 300)
+
+  // TODO: Add a new state variable called dataVersion with an initial value of 0
+  const [dataVersion, setDataVersion] = useState(0)
 
   useEffect(() => {
     async function fetchTodos() {
@@ -113,6 +116,8 @@ function TodosPage({ token }) {
           todo.id === newTodoObject.id ? actualTodoFromServer : todo,
         )
       })
+      // TODO: Call invalidateCache after successful mutations. Add this line after each successful API operation in addTodo, completeTodo, and updateTodo:
+      invalidateCache()
     } catch (error) {
       setError(error.message)
       setTodoList((previous) => {
@@ -167,6 +172,8 @@ function TodosPage({ token }) {
         }),
       )
     }
+    // TODO: Call invalidateCache after successful mutations. Add this line after each successful API operation in addTodo, completeTodo, and updateTodo:
+    invalidateCache()
   }
 
   async function updateTodo(editedTodo) {
@@ -213,6 +220,8 @@ function TodosPage({ token }) {
         }),
       )
     }
+    // TODO: Call invalidateCache after successful mutations. Add this line after each successful API operation in addTodo, completeTodo, and updateTodo:
+    invalidateCache()
   }
 
   // TODO:Create filter handler function:
@@ -223,6 +232,16 @@ function TodosPage({ token }) {
   function handleFilterChange(newTerm) {
     setFilterTerm(newTerm)
   }
+
+  // TODO: Create cache invalidation function:
+  // Create a function called invalidateCache using useCallback
+  // The function should increment dataVersion by 1 using the functional update form: setDataVersion(prev => prev + 1)
+  // Include a console.log message: "Invalidating memo cache after todo mutation"
+  // Use an empty dependency array since it only uses the setState function and the functional update form
+  const invalidateCache = useCallback(() => {
+    setDataVersion((prev) => prev + 1)
+    console.log('Invalidating memo cache after todo mutation')
+  }, [])
 
   return (
     <div>
@@ -256,6 +275,7 @@ function TodosPage({ token }) {
         todoList={Array.isArray(todoList) ? todoList : []}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
       />
     </div>
   )
