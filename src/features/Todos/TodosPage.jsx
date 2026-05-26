@@ -9,29 +9,16 @@ function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([])
   const [error, setError] = useState('')
   const [isTodoListLoading, setIsTodoListLoading] = useState(false)
-
-  // TODO: Add two new state variables after existing state: sortBy with initial value creationDate' and sortDirection with initial value 'desc'
   const [sortBy, setSortBy] = useState('creationDate')
   const [sortDirection, setSortDirection] = useState('desc')
-
-  // TODO: Add filter state after existing state in TodosPage.jsx: Import useDebounce from your utils directory at the top of the file. Add the filter state variables:
   const [filterTerm, setFilterTerm] = useState('')
+
   const debouncedFilterTerm = useDebounce(filterTerm, 300)
 
-  // TODO: Add a new state variable called dataVersion with an initial value of 0
   const [dataVersion, setDataVersion] = useState(0)
 
   useEffect(() => {
     async function fetchTodos() {
-      // TODO: Modify the fetchTodos function to include sort parameters: Create a URLSearchParams object inside the function with sortBy and sortDirection properties Update the fetch URL to append the params to the base /tasks endpoint using template literals
-
-      // TODO: Update fetchTodos function to include filter when present:
-      // Modify your existing URLSearchParams creation to conditionally include the find property
-      // Start with an object containing your sort parameters: { sortBy, sortDirection }
-      // Use an if statement to check if debouncedFilterTerm has a value
-      // If it does, add the find property to the object: if (debouncedFilterTerm) { paramsObject.find = debouncedFilterTerm; }
-      // Then create the URLSearchParams with this object
-
       const paramsObject = { sortBy, sortDirection }
 
       if (debouncedFilterTerm) {
@@ -72,7 +59,6 @@ function TodosPage({ token }) {
       }
     }
     fetchTodos()
-    // TODO: Add debouncedFilterTerm to your existing dependency array
   }, [token, sortBy, sortDirection, debouncedFilterTerm])
 
   async function addTodo(todoTitle) {
@@ -116,7 +102,7 @@ function TodosPage({ token }) {
           todo.id === newTodoObject.id ? actualTodoFromServer : todo,
         )
       })
-      // TODO: Call invalidateCache after successful mutations. Add this line after each successful API operation in addTodo, completeTodo, and updateTodo:
+
       invalidateCache()
     } catch (error) {
       setError(error.message)
@@ -172,7 +158,7 @@ function TodosPage({ token }) {
         }),
       )
     }
-    // TODO: Call invalidateCache after successful mutations. Add this line after each successful API operation in addTodo, completeTodo, and updateTodo:
+
     invalidateCache()
   }
 
@@ -220,24 +206,13 @@ function TodosPage({ token }) {
         }),
       )
     }
-    // TODO: Call invalidateCache after successful mutations. Add this line after each successful API operation in addTodo, completeTodo, and updateTodo:
     invalidateCache()
   }
 
-  // TODO:Create filter handler function:
-  // Create a function that accepts the new filter term and calls setFilterTerm
-  // Name the function something descriptive like handleFilterChange
-  // No need for useCallback since this function is simple and only calls setState
-  // Pattern: const handleFilterChange = (newTerm) => { setFilterTerm(newTerm); };
   function handleFilterChange(newTerm) {
     setFilterTerm(newTerm)
   }
 
-  // TODO: Create cache invalidation function:
-  // Create a function called invalidateCache using useCallback
-  // The function should increment dataVersion by 1 using the functional update form: setDataVersion(prev => prev + 1)
-  // Include a console.log message: "Invalidating memo cache after todo mutation"
-  // Use an empty dependency array since it only uses the setState function and the functional update form
   const invalidateCache = useCallback(() => {
     setDataVersion((prev) => prev + 1)
     console.log('Invalidating memo cache after todo mutation')
@@ -255,11 +230,6 @@ function TodosPage({ token }) {
       )}
 
       {isTodoListLoading && <div>Loading...</div>}
-      {/* TODO: Integrate SortBy in TodosPage.jsx: Place the component above TodoForm in the JSX 
-      Pass the current sort state values and setState functions as props (recall the name of the props we added in the component definipwdtion) sortBy,
-  sortDirection,
-  onSortByChange,
-  onSortDirectionChange,*/}
       <SortBy
         sortBy={sortBy}
         sortDirection={sortDirection}

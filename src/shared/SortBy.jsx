@@ -1,5 +1,3 @@
-//TODO: Create a functional component that accepts props: sortBy, sortDirection, onSortByChange, onSortDirectionChange Create two select dropdowns with proper labels and htmlFor attributes First dropdown: "Sort by" with options for 'creationDate' ("Creation Date") and 'title' ("Title") Second dropdown: "Order" with options for 'desc' ("Descending") and 'asc' ("Ascending") Use controlled component pattern with value and onChange handlers that call the respective prop functions
-
 function SortBy({
   sortBy,
   sortDirection,

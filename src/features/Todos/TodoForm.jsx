@@ -11,7 +11,6 @@ function TodoForm({ onAddTodo }) {
     e.preventDefault()
 
     if (workingTodoTitle.trim() && workingTodoTitle.trim() !== '') {
-      // call the onAddTodo function, provide the workingTodoTitle
       onAddTodo(workingTodoTitle)
       setWorkingTodoTitle('')
       inputRef.current.focus()
@@ -19,7 +18,6 @@ function TodoForm({ onAddTodo }) {
   }
 
   return (
-    // refactor here
     <form onSubmit={handleAddTodo}>
       <TextInputWithLabel
         elementId={'todoTitle'}
