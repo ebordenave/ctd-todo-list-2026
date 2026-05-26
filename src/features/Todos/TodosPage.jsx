@@ -2,23 +2,40 @@ import { useState, useEffect } from 'react'
 import TodoList from './TodoList/TodoList'
 import TodoForm from './TodoForm'
 import SortBy from '../../shared/SortBy'
+import useDebounce from '../../hooks/useDebounce'
+import FilterInput from '../../shared/FilterInput'
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([])
   const [error, setError] = useState('')
   const [isTodoListLoading, setIsTodoListLoading] = useState(false)
 
-  // TODO:Add two new state variables after existing state: sortBy with initial value creationDate' and sortDirection with initial value 'desc'
+  // TODO: Add two new state variables after existing state: sortBy with initial value creationDate' and sortDirection with initial value 'desc'
   const [sortBy, setSortBy] = useState('creationDate')
   const [sortDirection, setSortDirection] = useState('desc')
+
+  // TODO: Add filter state after existing state in TodosPage.jsx: Import useDebounce from your utils directory at the top of the file. Add the filter state variables:
+  const [filterTerm, setFilterTerm] = useState('')
+  const debouncedFilterTerm = useDebounce(filterTerm, 300)
 
   useEffect(() => {
     async function fetchTodos() {
       // TODO: Modify the fetchTodos function to include sort parameters: Create a URLSearchParams object inside the function with sortBy and sortDirection properties Update the fetch URL to append the params to the base /tasks endpoint using template literals
-      const params = new URLSearchParams({
-        sortBy,
-        sortDirection,
-      })
+
+      // TODO: Update fetchTodos function to include filter when present:
+      // Modify your existing URLSearchParams creation to conditionally include the find property
+      // Start with an object containing your sort parameters: { sortBy, sortDirection }
+      // Use an if statement to check if debouncedFilterTerm has a value
+      // If it does, add the find property to the object: if (debouncedFilterTerm) { paramsObject.find = debouncedFilterTerm; }
+      // Then create the URLSearchParams with this object
+
+      const paramsObject = { sortBy, sortDirection }
+
+      if (debouncedFilterTerm) {
+        paramsObject.find = debouncedFilterTerm
+      }
+
+      const params = new URLSearchParams(paramsObject)
 
       try {
         setIsTodoListLoading(true)
@@ -52,8 +69,8 @@ function TodosPage({ token }) {
       }
     }
     fetchTodos()
-    // TODO: Update useEffect dependencies to re-fetch when sort options change: Add sortBy and sortDirection to the dependency array alongside the existing token
-  }, [token, sortBy, sortDirection])
+    // TODO: Add debouncedFilterTerm to your existing dependency array
+  }, [token, sortBy, sortDirection, debouncedFilterTerm])
 
   async function addTodo(todoTitle) {
     const newTodoObject = {
@@ -198,6 +215,15 @@ function TodosPage({ token }) {
     }
   }
 
+  // TODO:Create filter handler function:
+  // Create a function that accepts the new filter term and calls setFilterTerm
+  // Name the function something descriptive like handleFilterChange
+  // No need for useCallback since this function is simple and only calls setState
+  // Pattern: const handleFilterChange = (newTerm) => { setFilterTerm(newTerm); };
+  function handleFilterChange(newTerm) {
+    setFilterTerm(newTerm)
+  }
+
   return (
     <div>
       {error && (
@@ -211,7 +237,7 @@ function TodosPage({ token }) {
 
       {isTodoListLoading && <div>Loading...</div>}
       {/* TODO: Integrate SortBy in TodosPage.jsx: Place the component above TodoForm in the JSX 
-      Pass the current sort state values and setState functions as props (recall the name of the props we added in the component definition) sortBy,
+      Pass the current sort state values and setState functions as props (recall the name of the props we added in the component definipwdtion) sortBy,
   sortDirection,
   onSortByChange,
   onSortDirectionChange,*/}
@@ -220,6 +246,10 @@ function TodosPage({ token }) {
         sortDirection={sortDirection}
         onSortByChange={setSortBy}
         onSortDirectionChange={setSortDirection}
+      />
+      <FilterInput
+        filterTerm={filterTerm}
+        onFilterChange={handleFilterChange}
       />
       <TodoForm onAddTodo={addTodo} />
       <TodoList
