@@ -1,7 +1,7 @@
 import { useEditableTitle } from '../../../hooks/useEditableTitle'
 import TextInputWithLabel from '../../../shared/TextInputWithLabel'
 import { isValidTodoTitle } from '../../../utils/todoValidation'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const inputRef = useRef()
@@ -13,6 +13,12 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
     updateTitle,
     finishEdit,
   } = useEditableTitle(todo.title)
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current.focus()
+    }
+  }, [isEditing])
 
   const handleEdit = (e) => updateTitle(e.target.value)
 
@@ -31,7 +37,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             <TextInputWithLabel
               value={workingTitle}
               onChange={handleEdit}
-              elementId={`editTodo-${todo.id}`}
+              elementId={`editTodo${todo.id}`}
               labelText={'Todo'}
               ref={inputRef}
             />
