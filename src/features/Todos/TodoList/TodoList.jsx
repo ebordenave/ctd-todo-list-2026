@@ -1,16 +1,25 @@
 import { TodoListItem } from './TodoListItem'
-// In TodoList, destructure that helper out of the
-// component's props then pass it to TodoListItem in the same manner.
+import { useMemo } from 'react'
 
-function TodoList({ todoList, onCompleteTodo, onUpdateTodo }) {
-  const filteredTodoList = todoList.filter((todo) => !todo.isCompleted)
+function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
+  const filteredTodoList = useMemo(() => {
+    // console.log(`Recalculating filtered todos (v${dataVersion})`)
+
+    const activeTodoList = todoList.filter((todo) => !todo.isCompleted)
+
+    return {
+      version: dataVersion,
+      todos: activeTodoList,
+    }
+  }, [todoList, dataVersion])
+
   return (
     <div>
-      {filteredTodoList.length === 0 ? (
+      {filteredTodoList.todos.length === 0 ? (
         <p>Add todo above to get started</p>
       ) : (
         <ul>
-          {filteredTodoList.map((todo) => (
+          {filteredTodoList.todos.map((todo) => (
             <TodoListItem
               todo={todo}
               key={todo.id}
@@ -25,7 +34,3 @@ function TodoList({ todoList, onCompleteTodo, onUpdateTodo }) {
 }
 
 export default TodoList
-// Pass Handler Through Components
-// In App.jsx, add an onCompleteTodo prop to the TodoList component, passing in your completeTodo function
-// In TodoList.jsx, add onCompleteTodo to the component's props using destructuring
-// Pass the onCompleteTodo prop to each TodoListItem component instance

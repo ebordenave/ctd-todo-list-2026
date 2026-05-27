@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 function Logon({ onSetEmail, onSetToken }) {
   const initialValue = ''
-  //   note to self: getter is that var/values, setter is the function
+
   const [email, setEmail] = useState(initialValue)
   const [password, setPassword] = useState(initialValue)
   const [authError, setAuthError] = useState(initialValue)

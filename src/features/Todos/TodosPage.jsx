@@ -1,19 +1,51 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import TodoList from './TodoList/TodoList'
 import TodoForm from './TodoForm'
+import SortBy from '../../shared/SortBy'
+import useDebounce from '../../hooks/useDebounce'
+import FilterInput from '../../shared/FilterInput'
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([])
   const [error, setError] = useState('')
   const [isTodoListLoading, setIsTodoListLoading] = useState(false)
+  const [sortBy, setSortBy] = useState('creationDate')
+  const [sortDirection, setSortDirection] = useState('desc')
+  const [filterTerm, setFilterTerm] = useState('')
+
+  // TODO:Add filter error state to TodosPage.jsx:
+  // Add a new state variable called filterError with an initial value of an empty string
+  // Use useState to create the state and setter function
+  const [filterError, setFilterError] = useState('')
+
+  const debouncedFilterTerm = useDebounce(filterTerm, 300)
+
+  const [dataVersion, setDataVersion] = useState(0)
 
   useEffect(() => {
+    // TODO: Update error handling in fetchTodos to distinguish error types:
+    // } catch (error) {
+    //   if (debouncedFilterTerm || sortBy !== 'creationDate' || sortDirection !== 'desc') {
+    //     setFilterError(`Error filtering/sorting todos: ${error.message}`);
+    //   } else {
+    //     setError(`Error fetching todos: ${error.message}`);
+    //   }
+    // } finally {
+
     async function fetchTodos() {
+      const paramsObject = { sortBy, sortDirection }
+
+      if (debouncedFilterTerm) {
+        paramsObject.find = debouncedFilterTerm
+      }
+
+      const params = new URLSearchParams(paramsObject)
+
       try {
         setIsTodoListLoading(true)
         setError('')
 
-        const response = await fetch('/api/tasks', {
+        const response = await fetch(`/api/tasks?${params}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -33,15 +65,24 @@ function TodosPage({ token }) {
         const data = await response.json()
 
         setTodoList(data.tasks || data.task || [])
+        setFilterError('')
       } catch (error) {
-        setError(error.message)
-        setTodoList([])
+        if (
+          debouncedFilterTerm ||
+          sortBy !== 'creationDate' ||
+          sortDirection !== 'desc'
+        ) {
+          setFilterError(`Error filtering/sorting todos: ${error.message}`)
+        } else {
+          setError(`Error fetching todos: ${error.message}`)
+        }
+        setTodoList([]) //not sure if this is necessary
       } finally {
         setIsTodoListLoading(false)
       }
     }
     fetchTodos()
-  }, [token])
+  }, [token, sortBy, sortDirection, debouncedFilterTerm])
 
   async function addTodo(todoTitle) {
     const newTodoObject = {
@@ -84,6 +125,8 @@ function TodosPage({ token }) {
           todo.id === newTodoObject.id ? actualTodoFromServer : todo,
         )
       })
+
+      invalidateCache()
     } catch (error) {
       setError(error.message)
       setTodoList((previous) => {
@@ -138,6 +181,8 @@ function TodosPage({ token }) {
         }),
       )
     }
+
+    invalidateCache()
   }
 
   async function updateTodo(editedTodo) {
@@ -184,10 +229,53 @@ function TodosPage({ token }) {
         }),
       )
     }
+    invalidateCache()
   }
+
+  function handleFilterChange(newTerm) {
+    setFilterTerm(newTerm)
+  }
+
+  const invalidateCache = useCallback(() => {
+    setDataVersion((prev) => prev + 1)
+    // console.log('Invalidating memo cache after todo mutation')
+  }, [])
+
+  // TODO: Add filter error UI after the elements for the existing error:
+  // Create a conditional block that displays when filterError has a value
+  // Inside the block, create a div containing:
+  // A paragraph element displaying the filter error message
+  // A "Clear Filter Error" button that calls setFilterError('') when clicked
+  // A "Reset Filters" button that when clicked:
+  // Clears the filter term: setFilterTerm('')
+  // Resets sort by: setSortBy('creationDate')
+  // Resets sort direction: setSortDirection('desc')
+  // Clears the filter error: setFilterError('')
 
   return (
     <div>
+      {filterError && (
+        <div>
+          <p>{filterError}</p>
+          <button
+            onClick={() => {
+              setFilterError('')
+            }}
+          >
+            Clear Error
+          </button>
+          <button
+            onClick={() => {
+              setFilterTerm('')
+              setSortBy('creationDate')
+              setSortDirection('desc')
+              setFilterError('')
+            }}
+          >
+            Reset Error
+          </button>
+        </div>
+      )}
       {error && (
         <div>
           <p>{error}</p>
@@ -198,12 +286,22 @@ function TodosPage({ token }) {
       )}
 
       {isTodoListLoading && <div>Loading...</div>}
-
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
+      <FilterInput
+        filterTerm={filterTerm}
+        onFilterChange={handleFilterChange}
+      />
       <TodoForm onAddTodo={addTodo} />
       <TodoList
         todoList={Array.isArray(todoList) ? todoList : []}
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
+        dataVersion={dataVersion}
       />
     </div>
   )
