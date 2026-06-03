@@ -6,13 +6,17 @@ import useDebounce from '../../hooks/useDebounce'
 import FilterInput from '../../shared/FilterInput'
 
 function TodosPage({ token }) {
+  // TODO OPERATIONS
   const [todoList, setTodoList] = useState([])
-  const [error, setError] = useState('')
   const [isTodoListLoading, setIsTodoListLoading] = useState(false)
+
+  // UI OPERATIONS
   const [sortBy, setSortBy] = useState('creationDate')
   const [sortDirection, setSortDirection] = useState('desc')
   const [filterTerm, setFilterTerm] = useState('')
 
+  // ERROR HANDLING
+  const [error, setError] = useState('')
   // TODO:Add filter error state to TodosPage.jsx:
   // Add a new state variable called filterError with an initial value of an empty string
   // Use useState to create the state and setter function
@@ -40,10 +44,10 @@ function TodosPage({ token }) {
       }
 
       const params = new URLSearchParams(paramsObject)
-
+      //! happy path - success
       try {
-        setIsTodoListLoading(true)
-        setError('')
+        setIsTodoListLoading(true) //!: look here for reducer states
+        setError('') //! look here for reducer states
 
         const response = await fetch(`/api/tasks?${params}`, {
           method: 'GET',
@@ -67,11 +71,14 @@ function TodosPage({ token }) {
         setTodoList(data.tasks || data.task || [])
         setFilterError('')
       } catch (error) {
-        if (
+        //! error path - ERROR
+
+        const isFilteringActive = !!(
           debouncedFilterTerm ||
           sortBy !== 'creationDate' ||
           sortDirection !== 'desc'
-        ) {
+        )
+        if (isFilteringActive) {
           setFilterError(`Error filtering/sorting todos: ${error.message}`)
         } else {
           setError(`Error fetching todos: ${error.message}`)
@@ -131,24 +138,25 @@ function TodosPage({ token }) {
       setError(error.message)
       setTodoList((previous) => {
         if (!Array.isArray(previous)) return []
+
         return previous.filter((todo) => todo.id !== newTodoObject.id)
       })
     }
   }
-
+  //! COMPLETE TODO LOGIC HERE
   async function completeTodo(id) {
     let originalTodo = null
 
-    setTodoList((currentTodos) =>
-      currentTodos.map((todo) => {
+    setTodoList((currentTodos) => {
+      return currentTodos.map((todo) => {
         if (todo.id === id) {
           originalTodo = { ...todo }
           return { ...todo, isCompleted: true }
         } else {
           return todo
         }
-      }),
-    )
+      })
+    })
 
     try {
       const createdAtValue = originalTodo ? originalTodo.createdAt : undefined
@@ -231,7 +239,7 @@ function TodosPage({ token }) {
     }
     invalidateCache()
   }
-
+  //!
   function handleFilterChange(newTerm) {
     setFilterTerm(newTerm)
   }
