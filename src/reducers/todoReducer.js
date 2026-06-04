@@ -213,7 +213,7 @@ export function todoReducer(state, action) {
         error: '',
         filterError: '',
       }
-
+    //! WHERE IS THIS USED?
     case TODO_ACTIONS.RESET_FILTERS:
       return {
         ...state,
