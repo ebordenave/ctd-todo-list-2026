@@ -10,8 +10,10 @@ import TodoForm from './TodoForm'
 import SortBy from '../../shared/SortBy'
 import useDebounce from '../../hooks/useDebounce'
 import FilterInput from '../../shared/FilterInput'
+import useAuth from '../../hooks/useAuth'
 
-function TodosPage({ token }) {
+function TodosPage() {
+  const { token } = useAuth()
   const [state, dispatch] = useReducer(todoReducer, initialState)
   const {
     todoList,
