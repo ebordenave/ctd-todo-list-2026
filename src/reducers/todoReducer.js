@@ -42,7 +42,7 @@ export const initialState = {
   todoList: [],
   error: '',
   isTodoListLoading: false, //note: my original useState uses an initialValue of false but CTD template uses true
-  sortBy: 'creationDate', // creationDate vs createdDate
+  sortBy: 'createdAt',
   sortDirection: 'desc', // same here, uses desc but CTD uses asc
   filterTerm: '',
   filterError: '',
@@ -221,7 +221,7 @@ export function todoReducer(state, action) {
         error: '',
         filterError: '',
         filterTerm: '',
-        sortBy: 'creationDate',
+        sortBy: 'createdAt',
         sortDirection: 'desc',
       }
 

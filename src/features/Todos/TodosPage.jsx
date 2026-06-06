@@ -59,6 +59,7 @@ function TodosPage() {
         }
 
         const todos = await response.json()
+        console.log('👀 First task properties:', todos.tasks[0])
 
         dispatch({
           type: TODO_ACTIONS.FETCH_SUCCESS,
@@ -67,7 +68,7 @@ function TodosPage() {
       } catch (error) {
         const isFilteringActive = !!(
           debouncedFilterTerm ||
-          sortBy !== 'creationDate' ||
+          sortBy !== 'creationAt' ||
           sortDirection !== 'desc'
         )
 
