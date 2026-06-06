@@ -117,7 +117,6 @@ export function todoReducer(state, action) {
         error: '',
         filterError: '',
         todoList: state.todoList.map((todo) => {
-          // ✅ FIXED: Safely unpacks the id out of the cargo object
           return todo.id === action.payload.id
             ? { ...todo, isCompleted: true }
             : todo
@@ -131,7 +130,7 @@ export function todoReducer(state, action) {
         filterError: '',
         todoList: state.todoList.map((currentTodo) => {
           return currentTodo.id === action.payload.id
-            ? { ...currentTodo, ...action.payload } // ✅ FIXED: Merges safe properties
+            ? { ...currentTodo, ...action.payload }
             : currentTodo
         }),
       }
@@ -156,7 +155,6 @@ export function todoReducer(state, action) {
         error: '',
         filterError: '',
         todoList: state.todoList.map((currentTodo) => {
-          // ✅ FIXED: Safely finds and partially merges the update fields
           return currentTodo.id === action.payload.id
             ? { ...currentTodo, ...action.payload }
             : currentTodo
