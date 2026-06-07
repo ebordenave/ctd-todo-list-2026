@@ -1,4 +1,6 @@
-import { React, useState, createContext } from 'react'
+import React, { useState, createContext } from 'react'
+
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext()
 // import useAuth from '../hooks/useAuth'
 
@@ -46,7 +48,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
       return {
         success: false,
-        error: error,
+        error: error.message,
       }
     }
   }

@@ -2,7 +2,7 @@
 //! state = The Warehouse Inventory
 //! Represents the exact status of the world right now
 
-import { TodoListItem } from '../features/Todos/TodoList/TodoListItem'
+// import { TodoListItem } from '../features/Todos/TodoList/TodoListItem'
 
 //! action = The Delivery Truck
 //! An object arriving from the outside world. It always carries an instruction type (action.type) telling the warehouse manager what to do.
