@@ -1,6 +1,6 @@
 import {
   todoReducer,
-  initialState,
+  initialTodoState,
   TODO_ACTIONS,
 } from '../../reducers/todoReducer'
 
@@ -14,7 +14,7 @@ import useAuth from '../../hooks/useAuth'
 
 function TodosPage() {
   const { token } = useAuth()
-  const [state, dispatch] = useReducer(todoReducer, initialState)
+  const [state, dispatch] = useReducer(todoReducer, initialTodoState)
   const {
     todoList,
     error,

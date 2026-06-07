@@ -38,7 +38,7 @@ export const TODO_ACTIONS = {
   RESET_FILTERS: 'RESET_FILTERS',
 }
 
-export const initialState = {
+export const initialTodoState = {
   todoList: [],
   error: '',
   isTodoListLoading: false, //note: my original useState uses an initialValue of false but CTD template uses true
