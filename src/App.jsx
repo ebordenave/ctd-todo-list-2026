@@ -1,21 +1,22 @@
-import { useState } from 'react'
 import './App.css'
 import Logon from './features/Logon'
 import TodosPage from './features/Todos/TodosPage'
 import Header from './shared/Header'
+//! Use useAuth() to access isAuthenticated
+import useAuth from './hooks/useAuth'
 
 function App() {
-  const [email, setEmail] = useState('')
-  const [token, setToken] = useState('')
+  //! Remove authentication useState calls
+  // const [email, setEmail] = useState('')
+  // const [token, setToken] = useState('')
 
+  const { isAuthenticated } = useAuth()
+
+  //! Remove all authentication props from child components
   return (
     <>
-      <Header token={token} onSetToken={setToken} onSetEmail={setEmail} />
-      {token ? (
-        <TodosPage token={token} />
-      ) : (
-        <Logon onSetToken={setToken} onSetEmail={setEmail} />
-      )}
+      <Header />
+      {isAuthenticated ? <TodosPage /> : <Logon />}
     </>
   )
 }
