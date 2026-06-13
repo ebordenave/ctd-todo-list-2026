@@ -2,9 +2,9 @@ import { NavLink } from 'react-router'
 import React from 'react'
 import useAuth from '../contexts/AuthContext'
 
-import LoginPage from '../pages/LoginPage'
-import TodosPage from '../pages/TodosPage'
-import AboutPage from '../pages/AboutPage'
+// import LoginPage from '../pages/LoginPage'
+// import TodosPage from '../pages/TodosPage'
+// import AboutPage from '../pages/AboutPage'
 
 export default function Navigation() {
   const navLinkStyles = ({ isActive }) => ({

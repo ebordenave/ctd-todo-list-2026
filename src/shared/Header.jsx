@@ -13,10 +13,10 @@ function Header() {
   const { isAuthenticated } = useAuth() //! why?
   return (
     <div>
+      <Navigation />
       {isAuthenticated ? (
         <div>
           <h1>Todo List</h1>
-          <Navigation />
           <Logoff />
         </div>
       ) : (

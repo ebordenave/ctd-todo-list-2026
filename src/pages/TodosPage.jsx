@@ -16,9 +16,20 @@ import { useSearchParams } from 'react-router'
 import StatusFilter from '../shared/StatusFilter'
 
 function TodosPage() {
-  const { token } = useAuth()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const statusFilter = searchParams.get('status') || 'all'
+
+  function handleStatusChange(newStatus) {
+    const params = new URLSearchParams(searchParams)
+    if (newStatus === 'all') {
+      params.delete('status')
+    } else {
+      params.set('status', newStatus)
+    }
+    setSearchParams(params)
+  }
+
+  const { token } = useAuth()
 
   const [state, dispatch] = useReducer(todoReducer, initialTodoState)
   const {
@@ -243,7 +254,10 @@ function TodosPage() {
 
   return (
     <div>
-      <StatusFilter statusFilter={statusFilter} />
+      <StatusFilter
+        statusFilter={statusFilter}
+        onStatusChange={handleStatusChange}
+      />
       {filterError && (
         <div>
           <p>{filterError}</p>
