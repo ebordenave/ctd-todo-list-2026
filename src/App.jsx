@@ -1,18 +1,41 @@
 import './App.css'
-import Logon from './features/Logon'
-import TodosPage from './features/Todos/TodosPage'
+import { Routes, Route } from 'react-router'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import LoginPage from './pages/LoginPage'
+import TodosPage from './pages/TodosPage'
+import ProfilePage from './pages/ProfilePage'
+import NotFoundPage from './pages/NotFoundPage'
+import RequireAuth from './components/RequireAuth'
 import Header from './shared/Header'
-import { Outlet, Route, Routes } from 'react-router'
 
 function App() {
   return (
     <>
       <Header />
-      {/* //! https://reactrouter.com/start/declarative/routing#layout-routes */}
+      {/* //! https://reactrouter.com/start/declarative/routing#layout-routes  */}
       <Routes>
-        <Route element={<ProtectedRoute />}>
-          <Route path="/todos" element={<TodosPage />}></Route>
-        </Route>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/todos"
+          element={
+            <RequireAuth>
+              <TodosPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+          }
+        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   )

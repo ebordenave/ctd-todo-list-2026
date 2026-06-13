@@ -3,13 +3,15 @@ import { useState } from 'react'
 // Remove props parameter
 // Use useAuth() to access logout() method
 // Handle logout success/error from context
-import useAuth from '../hooks/useAuth'
+import useAuth from '../contexts/AuthContext'
+import { useNavigate } from 'react-router'
 
 export default function Logoff() {
   const [authError, setAuthError] = useState('')
 
   const { logout } = useAuth()
   const [isLoggingOn, setIsLoggingOn] = useState(false)
+  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     // set to true
@@ -19,6 +21,7 @@ export default function Logoff() {
       const result = await logout()
       if (result.success) {
         setAuthError('')
+        navigate('/login', { replace: true })
       } else {
         setAuthError(result.error)
       }

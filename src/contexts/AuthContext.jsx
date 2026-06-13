@@ -1,26 +1,27 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, createContext, useContext } from 'react'
+import { useNavigate } from 'react-router'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext()
-// import useAuth from '../hooks/useAuth'
 
-//! AuthProvider
-//! useState for auth data: email and token state variables
-//! children prop: Allows this component to wrap other components
-//! Context.Provider: Makes the value available to all child components
+// eslint-disable-next-line react-refresh/only-export-components
+export default function useAuth() {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
+  return context
+}
 
 export function AuthProvider({ children }) {
-  // State for authentication
-  const [email, setEmail] = useState('')
-  const [token, setToken] = useState('')
+  const [email, setEmail] = useState(
+    () => localStorage.getItem('userEmail') || '',
+  )
+  const [token, setToken] = useState(
+    () => localStorage.getItem('csrfToken') || '',
+  )
+  const navigate = useNavigate()
 
-  // Functions will go here...
-  //! login pattern:
-  // Return success/error objects: Components can check result.
-  // success and handle result.error
-  // Update state on success: Only call setEmail and setToken when authentication succeeds
-  // Include credentials: credentials: 'include' ensures cookies are sent with requests
-  // Error handling: Catch network errors and API errors consistently
   const login = async (userEmail, password) => {
     try {
       const options = {
@@ -34,12 +35,12 @@ export function AuthProvider({ children }) {
       const data = await res.json()
 
       if (res.status === 200 && data.name && data.csrfToken) {
-        // Success: Update state
         setEmail(data.name)
         setToken(data.csrfToken)
+        localStorage.setItem('userEmail', data.name)
+        localStorage.setItem('csrfToken', data.csrfToken)
         return { success: true }
       } else {
-        // Failure: Return error
         return {
           success: false,
           error: `Authentication failed: ${data?.message}`,
@@ -54,8 +55,6 @@ export function AuthProvider({ children }) {
   }
 
   const logout = async () => {
-    if (!token) return setEmail(''), setToken('')
-
     try {
       const options = {
         method: 'POST',
@@ -66,18 +65,8 @@ export function AuthProvider({ children }) {
         credentials: 'include',
       }
 
-      const res = await fetch('/api/users/logoff', options)
-      const data = await res.json()
-
-      if (res.status === 200 && data.name && data.csrfToken) {
-        // Success: Update state
-        return { success: true }
-      } else {
-        return {
-          success: false,
-          error: `Authentication failed: ${data?.message}`,
-        }
-      }
+      await fetch('/api/users/logoff', options)
+      return { success: true }
     } catch (error) {
       console.error(error.message)
       return {
@@ -85,14 +74,14 @@ export function AuthProvider({ children }) {
         error: error.message,
       }
     } finally {
-      //! clear local state
-      setToken('')
       setEmail('')
+      setToken('')
+      localStorage.removeItem('userEmail') //! does this work?
+      localStorage.removeItem('csrfToken') //! does this work?
+      navigate('/login')
     }
   }
 
-  // Context value object
-  //!Context Value: Provide { email, token, isAuthenticated, login, logout }
   const value = {
     email,
     token,
@@ -100,6 +89,6 @@ export function AuthProvider({ children }) {
     login,
     logout,
   }
-  //!<AuthContext.Provider value={value}>{children}</AuthContext.Provider> makes this value available to all descendant components. Any component wrapped by AuthProvider can call useAuth() to access these values and functions.
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

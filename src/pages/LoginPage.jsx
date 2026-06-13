@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import { useAuth } from '../contexts/AuthContext'
+import useAuth from '../contexts/AuthContext'
 
 export default function LoginPage() {
+  const initialValue = ''
   const [email, setEmail] = useState(initialValue)
   const [password, setPassword] = useState(initialValue)
   const [authError, setAuthError] = useState(initialValue)
   const [isLoggingOn, setIsLoggingOn] = useState(false)
-  const initialValue = ''
 
   const { login, isAuthenticated } = useAuth()
   const navigate = useNavigate()

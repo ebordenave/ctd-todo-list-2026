@@ -2,18 +2,24 @@ import {
   todoReducer,
   initialTodoState,
   TODO_ACTIONS,
-} from '../../reducers/todoReducer'
+} from '../reducers/todoReducer'
 
 import { useReducer, useEffect } from 'react'
-import TodoList from './TodoList/TodoList'
-import TodoForm from './TodoForm'
-import SortBy from '../../shared/SortBy'
-import useDebounce from '../../hooks/useDebounce'
-import FilterInput from '../../shared/FilterInput'
-import useAuth from '../../hooks/useAuth'
+import TodoList from '../features/Todos/TodoList/TodoList'
+import TodoForm from '../features/Todos/TodoForm'
+import SortBy from '../shared/SortBy'
+import useDebounce from '../hooks/useDebounce'
+import FilterInput from '../shared/FilterInput'
+import useAuth from '../contexts/AuthContext'
+
+import { useSearchParams } from 'react-router'
+import StatusFilter from '../shared/StatusFilter'
 
 function TodosPage() {
   const { token } = useAuth()
+  const [searchParams] = useSearchParams()
+  const statusFilter = searchParams.get('status') || 'all'
+
   const [state, dispatch] = useReducer(todoReducer, initialTodoState)
   const {
     todoList,
@@ -30,7 +36,8 @@ function TodosPage() {
 
   useEffect(() => {
     async function fetchTodos() {
-      const paramsObject = { sortBy, sortDirection }
+      //! look here
+      const paramsObject = { sortBy, sortDirection, status: statusFilter }
 
       if (debouncedFilterTerm) {
         paramsObject.find = debouncedFilterTerm
@@ -59,7 +66,6 @@ function TodosPage() {
         }
 
         const todos = await response.json()
-        console.log('👀 First task properties:', todos.tasks[0])
 
         dispatch({
           type: TODO_ACTIONS.FETCH_SUCCESS,
@@ -84,7 +90,7 @@ function TodosPage() {
       }
     }
     fetchTodos()
-  }, [token, sortBy, sortDirection, debouncedFilterTerm])
+  }, [token, sortBy, sortDirection, debouncedFilterTerm, statusFilter])
 
   async function addTodo(todoTitle) {
     const newTodoObject = {
@@ -140,7 +146,8 @@ function TodosPage() {
   }
 
   async function completeTodo(id) {
-    // const originalTodo = todoList.find((todo) => todo.id === id)
+    const todo = todoList.find((todo) => todo.id === id)
+    if (!todo) return
 
     dispatch({
       type: TODO_ACTIONS.COMPLETE_TODO_START,
@@ -158,7 +165,7 @@ function TodosPage() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          isCompleted: true,
+          isCompleted: !todo.isCompleted,
           // createdAt: createdAtValue, //! backend mismatch
         }),
       })
@@ -236,6 +243,7 @@ function TodosPage() {
 
   return (
     <div>
+      <StatusFilter statusFilter={statusFilter} />
       {filterError && (
         <div>
           <p>{filterError}</p>
@@ -297,6 +305,7 @@ function TodosPage() {
         onCompleteTodo={completeTodo}
         onUpdateTodo={updateTodo}
         dataVersion={dataVersion}
+        statusFilter={statusFilter}
       />
     </div>
   )

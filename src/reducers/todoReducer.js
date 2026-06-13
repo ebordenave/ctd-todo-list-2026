@@ -51,8 +51,6 @@ export const initialTodoState = {
 
 // reducer takes in state AND action args
 export function todoReducer(state, action) {
-  console.log('Dispatched action:', action.type, action.payload)
-
   switch (action.type) {
     case TODO_ACTIONS.FETCH_START:
       return { ...state, isTodoListLoading: true, error: '', filterError: '' }
