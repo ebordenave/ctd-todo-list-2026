@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router'
+import { Navigate, useNavigate, useLocation } from 'react-router'
 import useAuth from '../contexts/AuthContext'
 
 export default function RequireAuth({ children }) {
@@ -20,6 +20,7 @@ export default function RequireAuth({ children }) {
   if (!isAuthenticated) {
     return <p>Redirecting to login...</p>
   }
+
   if (!token) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
