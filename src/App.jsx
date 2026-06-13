@@ -8,14 +8,14 @@ import ProfilePage from './pages/ProfilePage'
 import NotFoundPage from './pages/NotFoundPage'
 import RequireAuth from './components/RequireAuth'
 import Header from './shared/Header'
-import Navigation from './shared/Navigation'
+// import Navigation from './shared/Navigation'
 
 function App() {
   return (
     <>
       <Header />
       {/* //! https://reactrouter.com/start/declarative/routing#layout-routes  */}
-      <Navigation />
+      {/* <Navigation /> */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />

@@ -10,7 +10,7 @@ export default function ProfilePage() {
     active: 0,
   })
 
-  const { token } = useAuth()
+  const { token, email } = useAuth()
 
   useEffect(() => {
     async function fetchTodoStats() {
@@ -60,11 +60,15 @@ export default function ProfilePage() {
   if (error) return <p>Error: {error}</p>
 
   return (
-    <section>
-      <h2>Task Statistics</h2>
-      <p>Total Tasks: {todoStats.total}</p>
-      <p>Active Tasks: {todoStats.active}</p>
-      <p>Completed Tasks: {todoStats.completed}</p>
-    </section>
+    <div>
+      <h2>Profile</h2>
+      <p>Logged in as: {email}</p>
+      <section>
+        <h2>Task Statistics</h2>
+        <p>Total Tasks: {todoStats.total}</p>
+        <p>Active Tasks: {todoStats.active}</p>
+        <p>Completed Tasks: {todoStats.completed}</p>
+      </section>
+    </div>
   )
 }
