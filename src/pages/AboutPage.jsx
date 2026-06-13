@@ -1,7 +1,3 @@
-import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router'
-import useAuth from '../contexts/AuthContext'
-
 import React from 'react'
 
 export default function AboutPage() {

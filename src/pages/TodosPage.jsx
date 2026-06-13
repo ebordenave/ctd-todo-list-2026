@@ -36,7 +36,12 @@ function TodosPage() {
 
   useEffect(() => {
     async function fetchTodos() {
-      const paramsObject = { sortBy, sortDirection, status: statusFilter }
+      const paramsObject = {
+        sortBy,
+        sortDirection,
+        status: statusFilter,
+        limit: 100,
+      }
 
       if (debouncedFilterTerm) {
         paramsObject.find = debouncedFilterTerm

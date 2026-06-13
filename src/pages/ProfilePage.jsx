@@ -29,7 +29,7 @@ export default function ProfilePage() {
           credentials: 'include',
         }
 
-        const response = await fetch('/api/tasks', options)
+        const response = await fetch('/api/tasks?limit=100', options)
         if (!response.ok) throw new Error('Failed to fetch data')
 
         const data = await response.json()

@@ -76,8 +76,9 @@ export function AuthProvider({ children }) {
     } finally {
       setEmail('')
       setToken('')
-      localStorage.removeItem('userEmail') //! does this work?
-      localStorage.removeItem('csrfToken') //! does this work?
+      localStorage.removeItem('userEmail')
+      localStorage.removeItem('csrfToken')
+
       navigate('/login')
     }
   }
