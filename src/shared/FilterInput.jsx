@@ -5,10 +5,9 @@ function FilterInput({ filterTerm, onFilterChange }) {
       <input
         type="text"
         id="filterInput"
-        type="text"
         value={filterTerm}
         onChange={(e) => onFilterChange(e.target.value)}
-        placeholder="Search by title..."
+        placeholder="Filter todos..."
       />
     </div>
   )
