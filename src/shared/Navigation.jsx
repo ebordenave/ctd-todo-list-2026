@@ -18,7 +18,9 @@ export default function Navigation() {
 
   return (
     <nav>
-      <NavLink to="/about">About</NavLink>
+      <NavLink to="/about" style={navLinkStyles}>
+        About
+      </NavLink>
 
       {isAuthenticated ? (
         <>

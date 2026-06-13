@@ -16,7 +16,6 @@ function App() {
       {/* //! https://reactrouter.com/start/declarative/routing#layout-routes  */}
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route

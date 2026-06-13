@@ -6,7 +6,8 @@ import useAuth from '../contexts/AuthContext'
 export default function RequireAuth({ children }) {
   const navigate = useNavigate()
   const location = useLocation()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, token } = useAuth()
+
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', {
@@ -18,6 +19,9 @@ export default function RequireAuth({ children }) {
 
   if (!isAuthenticated) {
     return <p>Redirecting to login...</p>
+  }
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />
   }
   return children
 }

@@ -16,7 +16,7 @@ export default function HomePage() {
     } else {
       //!otherwise
       //!navigate back to login
-      navigate('/login', { replace: false })
+      navigate('/login', { replace: true })
     }
   }, [isAuthenticated, navigate])
   return (
