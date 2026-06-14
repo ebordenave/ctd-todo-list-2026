@@ -1,15 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 import useAuth from '../contexts/AuthContext'
 
-function Logon() {
-  const { login } = useAuth()
-
+export default function LoginPage() {
   const initialValue = ''
-
   const [email, setEmail] = useState(initialValue)
   const [password, setPassword] = useState(initialValue)
   const [authError, setAuthError] = useState(initialValue)
   const [isLoggingOn, setIsLoggingOn] = useState(false)
+
+  const { login, isAuthenticated } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  //! Get intended destination from location state, default to /todos
+  const from = location.state?.from?.pathname || '/todos'
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(from, { replace: true })
+    }
+  }, [isAuthenticated, navigate, from])
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -64,5 +75,3 @@ function Logon() {
     </div>
   )
 }
-
-export default Logon

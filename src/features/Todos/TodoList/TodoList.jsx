@@ -1,35 +1,54 @@
 import { TodoListItem } from './TodoListItem'
 import { useMemo } from 'react'
 
-function TodoList({ todoList, onCompleteTodo, onUpdateTodo, dataVersion }) {
+function TodoList({
+  todoList = [],
+  onCompleteTodo,
+  onUpdateTodo,
+  dataVersion,
+  statusFilter = 'all',
+}) {
   const filteredTodoList = useMemo(() => {
-    // console.log(`Recalculating filtered todos (v${dataVersion})`)
-
-    const activeTodoList = todoList.filter((todo) => !todo.isCompleted)
+    let result = todoList
+    if (statusFilter === 'active') {
+      result = todoList.filter((todo) => !todo.isCompleted)
+    } else if (statusFilter === 'completed') {
+      result = todoList.filter((todo) => todo.isCompleted)
+    }
 
     return {
       version: dataVersion,
-      todos: activeTodoList,
+      todos: result, //! which means this result should be the todos that show
     }
-  }, [todoList, dataVersion])
+  }, [todoList, dataVersion, statusFilter]) //! could it be because my dependencies are different?
+
+  const getEmptyMessage = () => {
+    switch (statusFilter) {
+      case 'completed':
+        return 'No completed todos yet. Complete some tasks to see them here.'
+      case 'active':
+        return 'No active todos. Add a todo above to get started.'
+      case 'all':
+      default:
+        return 'Add todo above to get started.'
+    }
+  }
+
+  if (filteredTodoList.todos.length === 0) {
+    return <p>{getEmptyMessage()}</p>
+  }
 
   return (
-    <div>
-      {filteredTodoList.todos.length === 0 ? (
-        <p>Add todo above to get started</p>
-      ) : (
-        <ul>
-          {filteredTodoList.todos.map((todo) => (
-            <TodoListItem
-              todo={todo}
-              key={todo.id}
-              onCompleteTodo={onCompleteTodo}
-              onUpdateTodo={onUpdateTodo}
-            />
-          ))}
-        </ul>
-      )}
-    </div>
+    <ul>
+      {filteredTodoList.todos.map((todo) => (
+        <TodoListItem
+          todo={todo}
+          key={todo.id}
+          onCompleteTodo={onCompleteTodo}
+          onUpdateTodo={onUpdateTodo}
+        />
+      ))}
+    </ul>
   )
 }
 
