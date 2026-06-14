@@ -56,12 +56,15 @@ export default function ProfilePage() {
     fetchTodoStats()
   }, [token])
 
-  const completedPercentage = Math.round(
-    (todoStats.completed / todoStats.total) * 100,
-  )
-  const activePercentage = Math.round(
-    (todoStats.active / todoStats.total) * 100,
-  )
+  const completedPercentage =
+    todoStats.total > 0
+      ? Math.round((todoStats.completed / todoStats.total) * 100)
+      : 0
+
+  const activePercentage =
+    todoStats.total > 0
+      ? Math.round((todoStats.active / todoStats.total) * 100)
+      : 0
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error}</p>

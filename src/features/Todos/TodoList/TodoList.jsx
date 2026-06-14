@@ -24,12 +24,13 @@ function TodoList({
 
   const getEmptyMessage = () => {
     switch (statusFilter) {
-      case 'active':
-        return 'No active tasks found.'
       case 'completed':
-        return 'No completed tasks found.'
+        return 'No completed todos yet. Complete some tasks to see them here.'
+      case 'active':
+        return 'No active todos. Add a todo above to get started.'
+      case 'all':
       default:
-        return 'No tasks available.'
+        return 'Add todo above to get started.'
     }
   }
 
