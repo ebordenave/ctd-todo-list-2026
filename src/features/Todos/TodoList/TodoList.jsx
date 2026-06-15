@@ -18,9 +18,9 @@ function TodoList({
 
     return {
       version: dataVersion,
-      todos: result, //! which means this result should be the todos that show
+      todos: result,
     }
-  }, [todoList, dataVersion, statusFilter]) //! could it be because my dependencies are different?
+  }, [todoList, dataVersion, statusFilter])
 
   const getEmptyMessage = () => {
     switch (statusFilter) {
@@ -39,7 +39,7 @@ function TodoList({
   }
 
   return (
-    <ul>
+    <ul className="space-y-4">
       {filteredTodoList.todos.map((todo) => (
         <TodoListItem
           todo={todo}
