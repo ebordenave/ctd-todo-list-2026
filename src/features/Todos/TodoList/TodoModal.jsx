@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BUTTON_SCHEME } from '../../../utils/themeSchemes'
+import { BUTTON_SCHEME, MODAL_SCHEME } from '../../../utils/themeSchemes'
 
 export default function TodoModal({ isOpen, onClose, onAddTodo }) {
   const dialogRef = useRef(null)
@@ -26,11 +26,7 @@ export default function TodoModal({ isOpen, onClose, onAddTodo }) {
   }
 
   return (
-    <dialog
-      ref={dialogRef}
-      onClose={onClose}
-      className="rounded-xl p-6 shadow-xl backdrop:bg-zinc-900/50 w-full max-w-sm"
-    >
+    <dialog ref={dialogRef} onClose={onClose} className={MODAL_SCHEME.dialog}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold text-zinc-800">Add New Task</h2>
 
@@ -39,7 +35,7 @@ export default function TodoModal({ isOpen, onClose, onAddTodo }) {
           placeholder="What needs to be done?"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-3 border border-zinc-200 rounded-xl focus:outline-none focus:border-blue-500"
+          className={MODAL_SCHEME.input}
           autoFocus
         />
 
@@ -47,14 +43,11 @@ export default function TodoModal({ isOpen, onClose, onAddTodo }) {
           <button
             type="button"
             onClick={onClose}
-            className="py-2.5 border border-zinc-200 text-zinc-600 rounded-xl hover:bg-zinc-50 transition-colors"
+            className={BUTTON_SCHEME.secondary}
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            className="py-2.5 bg-[oklch(45%_0.24_264)] text-white font-medium rounded-xl hover:bg-[oklch(38%_0.24_264)] transition-colors"
-          >
+          <button type="submit" className={BUTTON_SCHEME.primary}>
             Save
           </button>
         </div>

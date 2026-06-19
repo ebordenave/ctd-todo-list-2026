@@ -2,7 +2,7 @@ import { useEditableTitle } from '../../../hooks/useEditableTitle'
 import TextInputWithLabel from '../../../shared/TextInputWithLabel'
 import { isValidTodoTitle } from '../../../utils/todoValidation'
 import { useEffect, useRef } from 'react'
-import { CARD_SCHEME } from '../../../utils/themeSchemes'
+import { BUTTON_SCHEME, CARD_SCHEME } from '../../../utils/themeSchemes'
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const inputRef = useRef()
@@ -31,8 +31,8 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   }
 
   return (
-    <li>
-      <form onSubmit={handleUpdate}>
+    <li className="w-full">
+      <form onSubmit={handleUpdate} className="w-full">
         {isEditing ? (
           <fieldset>
             <div className={CARD_SCHEME.container}>
@@ -40,17 +40,21 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 value={workingTitle}
                 onChange={handleEdit}
                 elementId={`editTodo${todo.id}`}
-                labelText={'Todo'}
                 ref={inputRef}
               />
-              <div className="flex flex-row space-x-4">
-                <button type="button" onClick={cancelEdit}>
+              <div className={'flex flex-row space-x-4 shrink-0'}>
+                <button
+                  type="button"
+                  onClick={cancelEdit}
+                  className={BUTTON_SCHEME.secondary}
+                >
                   Cancel
                 </button>
                 <button
                   onClick={handleUpdate}
                   type="button"
                   disabled={!isValidTodoTitle(workingTitle)}
+                  className={BUTTON_SCHEME.primary}
                 >
                   Update
                 </button>
@@ -60,7 +64,6 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
         ) : (
           <div className={CARD_SCHEME.container}>
             <div className="flex flex-row items-center gap-3">
-              {/**child 1 */}
               <label>
                 <input
                   type="checkbox"
@@ -91,10 +94,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               </section>
             </div>
             <div>
-              <button
-                type="button"
-                className="text-zinc-400 hover:text-zinc-600 text-4xl"
-              >
+              <button type="button" className={BUTTON_SCHEME.taskMenu}>
                 &#8942;
               </button>
             </div>
