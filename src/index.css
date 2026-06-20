@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --accent-color: oklch(45% 0.24 264);
+  --accent-hover: oklch(38% 0.24 264);
+}

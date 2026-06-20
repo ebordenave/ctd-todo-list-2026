@@ -2,9 +2,10 @@ import { useEditableTitle } from '../../../hooks/useEditableTitle'
 import TextInputWithLabel from '../../../shared/TextInputWithLabel'
 import { isValidTodoTitle } from '../../../utils/todoValidation'
 import { useEffect, useRef } from 'react'
-import { BUTTON_SCHEME, CARD_SCHEME } from '../../../utils/themeSchemes'
+import { BUTTON_SCHEME, CARD_SCHEME } from '../../../utils/theme-config'
+import { Trash2 } from 'lucide-react'
 
-function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
+function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
   const inputRef = useRef()
   const {
     isEditing,
@@ -28,6 +29,13 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
     e.preventDefault()
     const finalTitle = finishEdit()
     onUpdateTodo({ ...todo, title: finalTitle })
+  }
+
+  const handleDelete = (e) => {
+    if (todo) {
+      e.preventDefault()
+      onDeleteTodo(todo)
+    }
   }
 
   return (
@@ -93,9 +101,13 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
                 )}
               </section>
             </div>
-            <div>
-              <button type="button" className={BUTTON_SCHEME.taskMenu}>
-                &#8942;
+            <div className="flex flex-row justify-between items-center gap-4 dark:bg-gray-700">
+              <button
+                type="button"
+                className={BUTTON_SCHEME.taskMenu}
+                onClick={handleDelete}
+              >
+                <Trash2 size={24} />
               </button>
             </div>
           </div>

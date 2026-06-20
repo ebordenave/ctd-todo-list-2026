@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import useAuth from '../contexts/AuthContext'
+import Header from '../shared/Header'
+import { PROFILE_SCHEME } from '../utils/theme-config'
 
 export default function ProfilePage() {
   const [loading, setLoading] = useState(true)
@@ -66,21 +68,82 @@ export default function ProfilePage() {
       ? Math.round((todoStats.active / todoStats.total) * 100)
       : 0
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error}</p>
+  if (loading) {
+    return (
+      <div>
+        <Header />
+        <div className={PROFILE_SCHEME.wrapper}>
+          <p className="text-zinc-500 animate-pulse">
+            Loading dashboard statistics...
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div>
+        <Header />
+        <div className={PROFILE_SCHEME.wrapper}>
+          <p className="text-red-500 font-medium">
+            Error loading profile: {error}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>
-      <h2>Profile</h2>
-      <p>Logged in as: {email}</p>
-      <section>
-        <h2>Task Statistics</h2>
-        <p>Total Tasks: {todoStats.total}</p>
-        <p>Active Tasks: {todoStats.active}</p>
-        <p>Completed Tasks: {todoStats.completed}</p>
-        <p>Completed Percentage: {completedPercentage}%</p>
-        <p>Active Percentage: {activePercentage}%</p>
-      </section>
+      <Header />
+      <div className={PROFILE_SCHEME.wrapper}>
+        <h1 className="text-2xl font-bold text-zinc-800 mb-6">Profile</h1>
+
+        <div className={PROFILE_SCHEME.infoCard}>
+          <p className="text-sm text-zinc-500">Logged in as</p>
+          <p className="text-lg font-semibold text-zinc-800">{email}</p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-zinc-800 mb-4">
+          Task Statistics
+        </h2>
+
+        <div className={PROFILE_SCHEME.statsGrid}>
+          <div className={PROFILE_SCHEME.statBox}>
+            <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+              Total Tasks
+            </span>
+            <span className="text-2xl font-bold text-zinc-900">
+              {todoStats.total}
+            </span>
+          </div>
+
+          <div className={PROFILE_SCHEME.statBox}>
+            <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+              Active
+            </span>
+            <span className="text-2xl font-bold text-emerald-600">
+              {todoStats.active}
+            </span>
+            <span className="text-xs text-zinc-400">
+              {activePercentage}% of total
+            </span>
+          </div>
+
+          <div className={PROFILE_SCHEME.statBox}>
+            <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+              Completed
+            </span>
+            <span className="text-2xl font-bold text-blue-600">
+              {todoStats.completed}
+            </span>
+            <span className="text-xs text-zinc-400">
+              {completedPercentage}% of total
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

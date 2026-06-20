@@ -1,3 +1,7 @@
+import React from 'react'
+import { CONTROL_BAR_SCHEME } from '../utils/theme-config'
+import { ArrowUpDown } from 'lucide-react'
+
 function SortBy({
   sortBy,
   sortDirection,
@@ -6,26 +10,32 @@ function SortBy({
 }) {
   return (
     <>
-      <label htmlFor="sort-category">Sort By</label>
-      <select
-        name="Sort By"
-        id="sort-category"
-        value={sortBy}
-        onChange={(e) => onSortByChange(e.target.value)}
-      >
-        <option value="createdAt">Creation Date</option>
-        <option value="title">Title</option>
-      </select>
-      <label htmlFor="order-category">Order</label>
-      <select
-        name=""
-        id="order-category"
-        value={sortDirection}
-        onChange={(e) => onSortDirectionChange(e.target.value)}
-      >
-        <option value="desc">Descending</option>
-        <option value="asc">Ascending</option>
-      </select>
+      <label htmlFor="sort-category">
+        <ArrowUpDown size={16} />
+      </label>
+      <div className="flex flex-row items-center gap-2 w-full">
+        <select
+          id="sort-category"
+          value={sortBy}
+          onChange={(e) => onSortByChange(e.target.value)}
+          // className={`${CONTROL_BAR_SCHEME.select} flex-1`}
+          className={`${CONTROL_BAR_SCHEME.selectBase} flex-1`}
+        >
+          <option value="createdAt">Creation Date</option>
+          <option value="title">Title</option>
+        </select>
+
+        <select
+          aria-label="Sort order"
+          id="order-category"
+          value={sortDirection}
+          onChange={(e) => onSortDirectionChange(e.target.value)}
+          className={`${CONTROL_BAR_SCHEME.selectBase} flex-1`}
+        >
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
+      </div>
     </>
   )
 }
