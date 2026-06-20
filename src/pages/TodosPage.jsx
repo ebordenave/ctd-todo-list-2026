@@ -11,14 +11,24 @@ import SortBy from '../shared/SortBy'
 import useDebounce from '../hooks/useDebounce'
 import FilterInput from '../shared/FilterInput'
 import useAuth from '../contexts/AuthContext'
+import Header from '../shared/Header'
+
+import { useState } from 'react'
+import { BUTTON_SCHEME, CONTROL_BAR_SCHEME } from '../utils/theme-config'
+import TodoModal from '../features/Todos/TodoList/TodoModal'
+import { SquareCheckBig, UserCircle } from 'lucide-react'
 
 import { useSearchParams } from 'react-router'
 import StatusFilter from '../shared/StatusFilter'
+import GradientSpinner from '../shared/GradientSpinner'
 
 function TodosPage() {
   const { token } = useAuth()
   const [searchParams] = useSearchParams()
   const statusFilter = searchParams.get('status') || 'all'
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [toast, setToast] = useState({ message: '', type: null })
 
   const [state, dispatch] = useReducer(todoReducer, initialTodoState)
   const {
@@ -126,6 +136,8 @@ function TodosPage() {
         type: TODO_ACTIONS.ADD_TODO_SUCCESS,
         payload: { actualTodo, tempId: newTodoObject.id },
       })
+      setToast({ message: 'Task successfully added!', type: 'success' })
+      setTimeout(() => setToast(''), 3000)
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.ADD_TODO_ERROR,
@@ -180,7 +192,6 @@ function TodosPage() {
         body: JSON.stringify({
           title: editedTodo.title,
           isCompleted: editedTodo.isCompleted,
-          createdAt: editedTodo.createdAt,
         }),
       })
 
@@ -198,69 +209,135 @@ function TodosPage() {
     }
   }
 
+  async function deleteTodo(currentTodo) {
+    dispatch({ type: TODO_ACTIONS.DELETE_TODO_START, payload: currentTodo })
+
+    try {
+      const res = await fetch(`/api/tasks/${currentTodo.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': token,
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          id: currentTodo.id,
+        }),
+      })
+
+      if (!res.ok) throw new Error('Failed to delete task')
+      const finalizedTodo = await res.json()
+
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_SUCCESS,
+        payload: finalizedTodo,
+      })
+      setToast({ message: 'Task successfully deleted!', type: 'deleted' })
+      setTimeout(() => setToast({ message: '' }), 3000)
+    } catch (error) {
+      dispatch({
+        type: TODO_ACTIONS.DELETE_TODO_ERROR,
+        payload: { message: error.message, originalTodo: currentTodo },
+      })
+    }
+  }
+
   function handleFilterChange(newTerm) {
     dispatch({
       type: TODO_ACTIONS.SET_FILTER,
       payload: { filterTerm: newTerm },
     })
   }
+  const toastBgColor =
+    toast.type === 'deleted'
+      ? 'bg-red-50 text-red-800 border-red-200'
+      : 'bg-emerald-100 text-emerald-800 border-emerald-200'
 
   return (
     <div>
-      <StatusFilter />
-
-      {(filterError || error) && (
-        <div>
-          <p>{filterError || error}</p>
-          <button
-            type="button"
-            onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
-          >
-            Clear Error
-          </button>
-          {filterError && (
-            <button
-              type="button"
-              onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
-            >
-              Reset Filters
-            </button>
-          )}
+      <Header />
+      <h1 className="text-2xl font-normal text-zinc-800 mb-4">My Tasks</h1>
+      {toast.message && (
+        <div
+          className={`mb-4 p-3 rounded-md border shadow-sm transition-all ${toastBgColor}`}
+        >
+          {toast.message}
         </div>
       )}
+      <div className="relative">
+        <section className={CONTROL_BAR_SCHEME.container}>
+          <FilterInput
+            filterTerm={filterTerm}
+            onFilterChange={handleFilterChange}
+          />
+          <StatusFilter />
+          {(filterError || error) && (
+            <div>
+              <p>{filterError || error}</p>
+              <button
+                type="button"
+                onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
+              >
+                Clear Error
+              </button>
+              {filterError && (
+                <button
+                  type="button"
+                  onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
+                >
+                  Reset Filters
+                </button>
+              )}
+            </div>
+          )}
+          <SortBy
+            sortBy={sortBy}
+            sortDirection={sortDirection}
+            onSortByChange={(newSort) =>
+              dispatch({
+                type: TODO_ACTIONS.SET_SORT,
+                payload: { sortBy: newSort, sortDirection },
+              })
+            }
+            onSortDirectionChange={(newDir) =>
+              dispatch({
+                type: TODO_ACTIONS.SET_SORT,
+                payload: { sortBy, sortDirection: newDir },
+              })
+            }
+          />
+        </section>
+        {isTodoListLoading && (
+          <div>
+            <GradientSpinner />
+          </div>
+        )}
+      </div>
+      <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+        <TodoList
+          todoList={Array.isArray(todoList) ? todoList : []}
+          onCompleteTodo={completeTodo}
+          onUpdateTodo={updateTodo}
+          onDeleteTodo={deleteTodo}
+          dataVersion={dataVersion}
+          statusFilter={statusFilter}
+        />
+      </div>
+      <button
+        type="button"
+        onClick={() => setIsModalOpen(true)}
+        className={`${BUTTON_SCHEME.primary} mt-4 mb-8`}
+      >
+        + Add Todo
+      </button>
 
-      {isTodoListLoading && <div>Loading...</div>}
-
-      <SortBy
-        sortBy={sortBy}
-        sortDirection={sortDirection}
-        onSortByChange={(newSort) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: { sortBy: newSort, sortDirection },
-          })
-        }
-        onSortDirectionChange={(newDir) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: { sortBy, sortDirection: newDir },
-          })
-        }
-      />
-
-      <FilterInput
-        filterTerm={filterTerm}
-        onFilterChange={handleFilterChange}
-      />
-      <TodoForm onAddTodo={addTodo} />
-
-      <TodoList
-        todoList={Array.isArray(todoList) ? todoList : []}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-        dataVersion={dataVersion}
-        statusFilter={statusFilter}
-      />
+      {isModalOpen && (
+        <TodoModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onAddTodo={addTodo}
+        />
+      )}
     </div>
   )
 }

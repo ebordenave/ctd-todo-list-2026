@@ -5,6 +5,7 @@ function TodoList({
   todoList = [],
   onCompleteTodo,
   onUpdateTodo,
+  onDeleteTodo,
   dataVersion,
   statusFilter = 'all',
 }) {
@@ -46,6 +47,7 @@ function TodoList({
           key={todo.id}
           onCompleteTodo={onCompleteTodo}
           onUpdateTodo={onUpdateTodo}
+          onDeleteTodo={onDeleteTodo}
         />
       ))}
     </ul>

@@ -2,38 +2,35 @@ import { NavLink } from 'react-router'
 import React from 'react'
 import useAuth from '../contexts/AuthContext'
 
-// import LoginPage from '../pages/LoginPage'
-// import TodosPage from '../pages/TodosPage'
-// import AboutPage from '../pages/AboutPage'
+import { NAV_SCHEME } from '../utils/theme-config'
+import { Info, ListTodo, User, LogIn } from 'lucide-react'
 
 export default function Navigation() {
-  const navLinkStyles = ({ isActive }) => ({
-    fontWeight: isActive ? 700 : 400,
-    textDecoration: isActive ? 'underline' : 'none',
-    padding: '2px 6px',
-    borderRadius: 6,
-    backgroundColor: isActive ? '#eee' : 'transparent',
-  })
+  const getNavLinkClass = ({ isActive }) => {
+    return `${NAV_SCHEME.baseLink} ${isActive ? NAV_SCHEME.active : NAV_SCHEME.inactive}`
+  }
+
   const { isAuthenticated } = useAuth()
 
   return (
-    <nav>
-      <NavLink to="/about" style={navLinkStyles}>
-        About
+    <nav className={NAV_SCHEME.navbar}>
+      <NavLink to="/about" className={getNavLinkClass}>
+        <Info /> About
       </NavLink>
 
       {isAuthenticated ? (
         <>
-          <NavLink to="/todos" style={navLinkStyles}>
+          <NavLink to="/todos" className={getNavLinkClass}>
+            <ListTodo />
             Todos
           </NavLink>
-          <NavLink to="/profile" style={navLinkStyles}>
-            Profile
+          <NavLink to="/profile" className={getNavLinkClass}>
+            <User /> Profile
           </NavLink>
         </>
       ) : (
-        <NavLink to="/login" style={navLinkStyles}>
-          Login
+        <NavLink to="/login" className={getNavLinkClass}>
+          <LogIn /> Login
         </NavLink>
       )}
     </nav>

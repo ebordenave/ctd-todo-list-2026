@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BUTTON_SCHEME, MODAL_SCHEME } from '../../../utils/themeSchemes'
+import { BUTTON_SCHEME, MODAL_SCHEME } from '../../../utils/theme-config'
 
 export default function TodoModal({ isOpen, onClose, onAddTodo }) {
   const dialogRef = useRef(null)
@@ -47,7 +47,11 @@ export default function TodoModal({ isOpen, onClose, onAddTodo }) {
           >
             Cancel
           </button>
-          <button type="submit" className={BUTTON_SCHEME.primary}>
+          <button
+            type="submit"
+            disabled={!title.trim()}
+            className={`${BUTTON_SCHEME.primary} disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
             Save
           </button>
         </div>

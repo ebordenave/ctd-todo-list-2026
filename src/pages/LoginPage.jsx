@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+import { SquareCheckBig } from 'lucide-react' // 🎨 Import the logo icon
 import useAuth from '../contexts/AuthContext'
 
 export default function LoginPage() {
@@ -13,7 +14,6 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  //! Get intended destination from location state, default to /todos
   const from = location.state?.from?.pathname || '/todos'
 
   useEffect(() => {
@@ -40,12 +40,32 @@ export default function LoginPage() {
     }
   }
 
+  const user = useAuth()
+  console.log(user)
+
   return (
-    <div>
-      {authError && <div role="alert">{authError}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
+    <div className="px-8 pt-8 pb-10">
+      <div className="flex items-center gap-2 justify-center mb-6">
+        <SquareCheckBig className="text-[oklch(45%_0.24_264)]" size={28} />
+        <h1 className="text-2xl font-bold text-zinc-800">
+          My<span className="text-[oklch(45%_0.24_264)]">Todos</span>
+        </h1>
+      </div>
+
+      {authError && (
+        <div
+          role="alert"
+          className="mb-4 text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-200"
+        >
+          {authError}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="email" className="text-sm font-medium text-zinc-700">
+            Email
+          </label>
           <input
             id="email"
             type="email"
@@ -54,10 +74,17 @@ export default function LoginPage() {
             required
             disabled={isLoggingOn}
             autoComplete="email"
+            className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-zinc-800 focus:outline-none focus:ring-2 focus:ring-[oklch(45%_0.24_264)] focus:border-transparent transition-all disabled:opacity-50"
           />
         </div>
-        <div>
-          <label htmlFor="password">Password</label>
+
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor="password"
+            className="text-sm font-medium text-zinc-700"
+          >
+            Password
+          </label>
           <input
             id="password"
             type="password"
@@ -66,10 +93,16 @@ export default function LoginPage() {
             required
             disabled={isLoggingOn}
             autoComplete="current-password"
+            className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-zinc-800 focus:outline-none focus:ring-2 focus:ring-[oklch(45%_0.24_264)] focus:border-transparent transition-all disabled:opacity-50"
           />
         </div>
-        <button type="submit" disabled={isLoggingOn}>
-          {isLoggingOn ? 'Logging in' : 'Log On'}
+
+        <button
+          type="submit"
+          disabled={isLoggingOn}
+          className="w-full mt-2 py-2 px-4 bg-[oklch(45%_0.24_264)] hover:bg-[oklch(40%_0.24_264)] text-white font-medium rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[oklch(45%_0.24_264)] disabled:opacity-50 cursor-pointer"
+        >
+          {isLoggingOn ? 'Logging in...' : 'Log On'}
         </button>
       </form>
     </div>

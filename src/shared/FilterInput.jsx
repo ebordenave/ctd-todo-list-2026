@@ -1,15 +1,20 @@
+import { Search } from 'lucide-react'
+import { CONTROL_BAR_SCHEME } from '../utils/theme-config'
 function FilterInput({ filterTerm, onFilterChange }) {
   return (
-    <div>
-      <label htmlFor="filterInput">Search todos:</label>
+    <>
+      <label htmlFor="filterInput">
+        <Search size={16} />
+      </label>
       <input
         type="text"
         id="filterInput"
         value={filterTerm}
         onChange={(e) => onFilterChange(e.target.value)}
-        placeholder="Filter todos..."
+        placeholder="Search todos..."
+        className={CONTROL_BAR_SCHEME.input}
       />
-    </div>
+    </>
   )
 }
 
