@@ -1,42 +1,24 @@
-//=====
-//! state = The Warehouse Inventory
-//! Represents the exact status of the world right now
-
-// import { TodoListItem } from '../features/Todos/TodoList/TodoListItem'
-
-//! action = The Delivery Truck
-//! An object arriving from the outside world. It always carries an instruction type (action.type) telling the warehouse manager what to do.
-
-//! action.payload = The Cargo
-//! The specific data package sitting inside the truck (like a new todo or an error message) needed to carry out the instruction.
-
 export const TODO_ACTIONS = {
-  // Fetch operations
   FETCH_START: 'FETCH_START',
   FETCH_SUCCESS: 'FETCH_SUCCESS',
   FETCH_ERROR: 'FETCH_ERROR',
 
-  // Add todo operations
   ADD_TODO_START: 'ADD_TODO_START',
   ADD_TODO_SUCCESS: 'ADD_TODO_SUCCESS',
   ADD_TODO_ERROR: 'ADD_TODO_ERROR',
 
-  // Complete todo operations
   COMPLETE_TODO_START: 'COMPLETE_TODO_START',
   COMPLETE_TODO_SUCCESS: 'COMPLETE_TODO_SUCCESS',
   COMPLETE_TODO_ERROR: 'COMPLETE_TODO_ERROR',
 
-  // Update todo operations
   UPDATE_TODO_START: 'UPDATE_TODO_START',
   UPDATE_TODO_SUCCESS: 'UPDATE_TODO_SUCCESS',
   UPDATE_TODO_ERROR: 'UPDATE_TODO_ERROR',
 
-  // Delete todo operation
   DELETE_TODO_START: 'DELETE_TODO_START',
   DELETE_TODO_SUCCESS: 'DELETE_TODO_SUCCESS',
   DELETE_TODO_ERROR: 'DELETE_TODO_ERROR',
 
-  // UI operations
   SET_SORT: 'SET_SORT',
   SET_FILTER: 'SET_FILTER',
   CLEAR_ERROR: 'CLEAR_ERROR',
@@ -46,9 +28,9 @@ export const TODO_ACTIONS = {
 export const initialTodoState = {
   todoList: [],
   error: '',
-  isTodoListLoading: false, //note: my original useState uses an initialValue of false but CTD template uses true
+  isTodoListLoading: false,
   sortBy: 'createdAt',
-  sortDirection: 'desc', // same here, uses desc but CTD uses asc
+  sortDirection: 'desc',
   filterTerm: '',
   filterError: '',
   dataVersion: 0,

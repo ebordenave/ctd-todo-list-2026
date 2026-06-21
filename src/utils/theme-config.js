@@ -17,9 +17,9 @@ export const CARD_SCHEME = {
 export const BUTTON_SCHEME = {
   button: `self-end mt-4 px-4 py-3 bg-[var(--accent-color)] text-white font-medium rounded-xl hover:bg-[var(--accent-hover)] transition-colors shadow-sm`,
 
-  primary: `py-2.5 bg-[var(--accent-color)] text-white font-medium rounded-xl hover:bg-[var(--accent-hover)] transition-colors text-center px-4`,
+  primary: `py-2.5 bg-[var(--accent-color)] text-white font-medium rounded-xl hover:bg-[var(--accent-hover)] transition-colors text-center px-4 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-color)]`,
 
-  secondary: `py-2.5 border border-zinc-200 text-zinc-600 rounded-xl hover:bg-zinc-50 transition-colors text-center px-4`,
+  secondary: `py-2.5 border border-zinc-200 text-zinc-600 rounded-xl hover:bg-zinc-50 transition-colors text-center px-4 focus:outline-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-color)]`,
 
   taskMenu: `text-zinc-400 hover:text-zinc-600 text-4xl`,
 }
@@ -70,4 +70,9 @@ export const NOT_FOUND_SCHEME = {
   title: `text-7xl text-center text-[var(--accent-hover)]`,
   subtitle: `font-bold text-zinc-500 text-xl text-center`,
   description: `font-semibold  text-center text-zinc-500`,
+}
+
+export const CHECKBOX_SCHEME = {
+  primary:
+    'appearance-none w-5 h-5 border border-zinc-300 rounded-md checked:bg-[var(--accent-color)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
 }
