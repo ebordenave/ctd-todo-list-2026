@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
-import { SquareCheckBig } from 'lucide-react' // 🎨 Import the logo icon
+import { SquareCheckBig } from 'lucide-react'
 import useAuth from '../contexts/AuthContext'
 
 export default function LoginPage() {

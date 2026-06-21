@@ -4,7 +4,6 @@ import React from 'react'
 export default function GradientSpinner() {
   return (
     <div className="flex items-center justify-center p-4">
-      {/* 🔮 The wrapper div creates the colorful gradient background */}
       <div
         className="animate-spin bg-gradient-to-br from-[oklch(45%_0.24_264)] to-[oklch(65%_0.20_300)]"
         style={{

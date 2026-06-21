@@ -18,7 +18,6 @@ function SortBy({
           id="sort-category"
           value={sortBy}
           onChange={(e) => onSortByChange(e.target.value)}
-          // className={`${CONTROL_BAR_SCHEME.select} flex-1`}
           className={`${CONTROL_BAR_SCHEME.selectBase} flex-1`}
         >
           <option value="createdAt">Creation Date</option>

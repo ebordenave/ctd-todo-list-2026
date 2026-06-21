@@ -2,8 +2,12 @@ import { useEditableTitle } from '../../../hooks/useEditableTitle'
 import TextInputWithLabel from '../../../shared/TextInputWithLabel'
 import { isValidTodoTitle } from '../../../utils/todoValidation'
 import { useEffect, useRef } from 'react'
-import { BUTTON_SCHEME, CARD_SCHEME } from '../../../utils/theme-config'
-import { Trash2 } from 'lucide-react'
+import {
+  BUTTON_SCHEME,
+  CARD_SCHEME,
+  CHECKBOX_SCHEME,
+} from '../../../utils/theme-config'
+import { Trash2, Check } from 'lucide-react'
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
   const inputRef = useRef()
@@ -72,14 +76,19 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
         ) : (
           <div className={CARD_SCHEME.container}>
             <div className="flex flex-row items-center gap-3">
-              <label>
+              <label className="relative flex items-center justify-center cursor-pointer">
                 <input
                   type="checkbox"
                   id={`checkbox${todo.id}`}
                   checked={todo.isCompleted}
                   onChange={() => onCompleteTodo(todo.id)}
+                  className={CHECKBOX_SCHEME.primary}
                 />
+                {todo.isCompleted && (
+                  <Check className="absolute text-white w-3.5 h-3.5 pointer-events-none" />
+                )}
               </label>
+
               <section className="flex flex-col items-start">
                 <span
                   onClick={() => startEditing()}

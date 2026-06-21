@@ -3,6 +3,6 @@
 @variant dark (&:where(.dark, .dark *));
 
 :root {
-  --accent-color: oklch(45% 0.24 264);
+  --accent-color: rgb(59, 130, 246);
   --accent-hover: oklch(38% 0.24 264);
 }

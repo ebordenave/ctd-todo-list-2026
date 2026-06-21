@@ -3,6 +3,7 @@ import {
   initialTodoState,
   TODO_ACTIONS,
 } from '../reducers/todoReducer'
+import DOMPurify from 'dompurify'
 
 import { useReducer, useEffect } from 'react'
 import TodoList from '../features/Todos/TodoList/TodoList'
@@ -107,9 +108,10 @@ function TodosPage() {
   }, [token, sortBy, sortDirection, debouncedFilterTerm, statusFilter])
 
   async function addTodo(todoTitle) {
+    const sanitizedTodoTitle = DOMPurify.sanitize(todoTitle)
     const newTodoObject = {
       id: Date.now(),
-      title: todoTitle,
+      title: sanitizedTodoTitle,
       isCompleted: false,
     }
 
@@ -126,7 +128,7 @@ function TodosPage() {
           'X-CSRF-TOKEN': token,
         },
         credentials: 'include',
-        body: JSON.stringify({ title: todoTitle, isCompleted: false }),
+        body: JSON.stringify({ title: sanitizedTodoTitle, isCompleted: false }),
       })
 
       if (!response.ok) throw new Error('Failed to add task')
@@ -178,11 +180,21 @@ function TodosPage() {
   }
 
   async function updateTodo(editedTodo) {
-    const originalTodo = todoList.find((todo) => todo.id === editedTodo.id)
-    dispatch({ type: TODO_ACTIONS.UPDATE_TODO_START, payload: editedTodo })
+    const sanitizedEditedTodoTitle = DOMPurify.sanitize(editedTodo.title)
+    const sanitizedEditedTodo = {
+      ...editedTodo,
+      title: sanitizedEditedTodoTitle,
+    }
+    const originalTodo = todoList.find(
+      (todo) => todo.id === sanitizedEditedTodo.id,
+    )
+    dispatch({
+      type: TODO_ACTIONS.UPDATE_TODO_START,
+      payload: sanitizedEditedTodo,
+    })
 
     try {
-      const response = await fetch(`/api/tasks/${editedTodo.id}`, {
+      const response = await fetch(`/api/tasks/${sanitizedEditedTodo.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -190,8 +202,8 @@ function TodosPage() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          title: editedTodo.title,
-          isCompleted: editedTodo.isCompleted,
+          title: sanitizedEditedTodoTitle,
+          isCompleted: sanitizedEditedTodo.isCompleted,
         }),
       })
 
@@ -204,7 +216,7 @@ function TodosPage() {
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
-        payload: { message: error.message, editedTodo, originalTodo },
+        payload: { message: error.message, sanitizedEditedTodo, originalTodo },
       })
     }
   }

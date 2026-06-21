@@ -37,6 +37,7 @@ export default function TodoModal({ isOpen, onClose, onAddTodo }) {
           onChange={(e) => setTitle(e.target.value)}
           className={MODAL_SCHEME.input}
           autoFocus
+          maxLength={100}
         />
 
         <div className="grid grid-cols-2 gap-3 mt-2">
