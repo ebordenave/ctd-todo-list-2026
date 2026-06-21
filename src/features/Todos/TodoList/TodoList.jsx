@@ -31,7 +31,7 @@ function TodoList({
         return 'No active todos. Add a todo above to get started.'
       case 'all':
       default:
-        return 'Add todo above to get started.'
+        return 'Add todo below to get started.'
     }
   }
 

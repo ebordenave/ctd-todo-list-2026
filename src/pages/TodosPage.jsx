@@ -5,7 +5,7 @@ import {
 } from '../reducers/todoReducer'
 import DOMPurify from 'dompurify'
 
-import { useReducer, useEffect } from 'react'
+import { useReducer, useEffect, useState } from 'react'
 import TodoList from '../features/Todos/TodoList/TodoList'
 import TodoForm from '../features/Todos/TodoForm'
 import SortBy from '../shared/SortBy'
@@ -14,7 +14,6 @@ import FilterInput from '../shared/FilterInput'
 import useAuth from '../contexts/AuthContext'
 import Header from '../shared/Header'
 
-import { useState } from 'react'
 import { BUTTON_SCHEME, CONTROL_BAR_SCHEME } from '../utils/theme-config'
 import TodoModal from '../features/Todos/TodoList/TodoModal'
 import { SquareCheckBig, UserCircle } from 'lucide-react'
@@ -284,22 +283,28 @@ function TodosPage() {
           />
           <StatusFilter />
           {(filterError || error) && (
-            <div>
-              <p>{filterError || error}</p>
-              <button
-                type="button"
-                onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
-              >
-                Clear Error
-              </button>
-              {filterError && (
+            <div className={CONTROL_BAR_SCHEME.errorAlert}>
+              <span className="font-medium">{filterError || error}</span>
+              <div className="flex gap-3">
                 <button
                   type="button"
-                  onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}
+                  className={CONTROL_BAR_SCHEME.errorButton}
+                  onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}
                 >
-                  Reset Filters
+                  Clear
                 </button>
-              )}
+                {filterError && (
+                  <button
+                    type="button"
+                    className={CONTROL_BAR_SCHEME.errorButton}
+                    onClick={() =>
+                      dispatch({ type: TODO_ACTIONS.RESET_FILTERS })
+                    }
+                  >
+                    Reset
+                  </button>
+                )}
+              </div>
             </div>
           )}
           <SortBy

@@ -25,8 +25,7 @@ function Header() {
           {isAuthenticated ? (
             <div className={HEADER_SCHEME.authGroup}>
               <Logoff />
-              {/* <UserCircle className={HEADER_SCHEME.userIcon} size={28} />
-              // probably here */}
+
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-200 text-zinc-800 font-semibold text-sm">
                 {initials}
               </div>

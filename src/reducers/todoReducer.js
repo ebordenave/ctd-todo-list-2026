@@ -36,7 +36,6 @@ export const initialTodoState = {
   dataVersion: 0,
 }
 
-// reducer takes in state AND action args
 export function todoReducer(state, action) {
   switch (action.type) {
     case TODO_ACTIONS.FETCH_START:
@@ -197,7 +196,7 @@ export function todoReducer(state, action) {
         error: '',
         filterError: '',
       }
-    //! WHERE IS THIS USED?
+
     case TODO_ACTIONS.RESET_FILTERS:
       return {
         ...state,

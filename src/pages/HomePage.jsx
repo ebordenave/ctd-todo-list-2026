@@ -9,13 +9,9 @@ export default function HomePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    //! if the user is authenticated
     if (isAuthenticated) {
-      //! navigate to todos
       navigate('/todos', { replace: true })
     } else {
-      //!otherwise
-      //!navigate back to login
       navigate('/login', { replace: true })
     }
   }, [isAuthenticated, navigate])
