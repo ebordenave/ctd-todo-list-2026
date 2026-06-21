@@ -40,9 +40,6 @@ export default function LoginPage() {
     }
   }
 
-  const user = useAuth()
-  console.log(user)
-
   return (
     <div className="px-8 pt-8 pb-10">
       <div className="flex items-center gap-2 justify-center mb-6">

@@ -68,7 +68,6 @@ export function AuthProvider({ children }) {
       await fetch('/api/users/logoff', options)
       return { success: true }
     } catch (error) {
-      console.error(error.message)
       return {
         success: false,
         error: error.message,
