@@ -35,7 +35,7 @@ _Add screenshot here_
 
 ### Feature Demo (Optional)
 
-<img src="src/assets/recording-1-600.gif" alt="Description of image" width="600" />
+<img src="src/assets/recording-1-800.gif" alt="Description of image" width="600" />
 
 <img src="src/assets/recording-2-800.gif" alt="Description of image" width="800" />
 
