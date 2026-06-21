@@ -59,18 +59,16 @@ _Add screenshot here_
 
 ## Features
 
-- Feature one
-- Feature two
-- Feature three
-- Feature four
+- Create Todos
+- Manage Todos
+- Persistent Storage
+- User Todo-Related Stats
 
 ---
 
 ## Why I Built This
 
-Explain why you built this project.
-
-What were you trying to learn or improve?
+I built this project as part of my Code the Dream curriculum to deepen my understanding of React by building a production-quality todo application with persistent state, secure input handling, and reusable components.
 
 ---
 
@@ -107,13 +105,19 @@ git clone ctd-todo-list-2026
 ### Navigate into the project
 
 ```bash
-cd your-project-name
+cd ctd-todo-list-2026
 ```
 
 ### Install dependencies
 
 ```bash
 npm install
+```
+
+or
+
+```bash
+npm i
 ```
 
 ### Run the development server
@@ -126,14 +130,14 @@ npm run dev
 
 ## Usage
 
-Describe how to use the application.
+How to use this application.
 
 Example:
 
-1. First action
-2. Second action
-3. Third action
-4. Fourth action
+1. Open the application in your browser.
+2. Sign up for an account or log in.
+3. Create new todo items.
+4. Manage tasks by editing, completing, or deleting them.
 
 ---
 
@@ -141,19 +145,25 @@ Example:
 
 ### `npm run dev`
 
-Explain what this script does.
+Starts the Vite development server using the current working directory as the project root. This provides fast development features such as Hot Module Replacement (HMR) for instant updates while editing.
+
+source: https://vite.dev/guide/
 
 ---
 
 ### `npm run build`
 
-Explain what this script does.
+Builds the application for production. Vite bundles the project into optimized static assets and outputs them into the dist directory by default.
+
+source: https://v4.vitejs.dev/guide/static-deploy
 
 ---
 
 ### `npm run preview`
 
-Explain what this script does.
+Starts a local static web server to preview the production build from the dist folder. This is useful for testing how the application will behave after deployment. Note: this is intended only for local previewing, not as a production server.
+
+source: https://v4.vitejs.dev/guide/static-deploy
 
 ---
 
@@ -161,25 +171,29 @@ Explain what this script does.
 
 ```text
 src/
+├── assets/
 ├── components/
+├── contexts/
 ├── features/
-├── pages/
 ├── hooks/
+├── pages/
 ├── reducers/
+├── shared/
 ├── utils/
 └── App.jsx
 ```
 
-Brief explanation of your folder organization.
+This project’s folder structure is based on the organizational patterns provided through the Code the Dream curriculum, with minor adjustments to improve clarity and maintainability. The goal is to create an intuitive structure that makes it easier for developers new to the codebase to navigate components, features, and application logic.
 
 ---
 
 ## Technologies Used
 
-- Technology one
-- Technology two
-- Technology three
-- Technology four
+- React
+- Vite
+- JavaScript (ES6+)
+- DOMPurify (for sanitizing user input)
+- Tailwind CSS
 
 ---
 
@@ -223,10 +237,11 @@ What did you learn?
 
 ## Future Improvements
 
-- Improvement one
-- Improvement two
-- Improvement three
-- Improvement four
+- Implement a light and dark mode toggle for improved accessibility and user preference customization.
+- Add a streak tracking system to encourage consistency and habit-building.
+- Develop a comprehensive statistics dashboard for tracking productivity and task completion trends, including an average time of a todos lifecycle.
+- Create a trash bin system to allow recovery of accidentally deleted tasks.
+- Introduce due dates and editable deadlines for improved task scheduling and prioritization.
 
 ---
 
@@ -242,8 +257,8 @@ See the `LICENSE` file for details.
 
 **Edward Bordenave**
 
-GitHub: www.github.com/ebordenave
+GitHub: https://www.github.com/ebordenave
 
-LinkedIn: www.linkedin.com/in/ebordenave
+LinkedIn: https://www.linkedin.com/in/ebordenave
 
 Email: edward.bordenave@gmail.com
