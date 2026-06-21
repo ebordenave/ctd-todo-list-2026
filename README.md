@@ -1,51 +1,241 @@
-# Code The Dream Todo App
+# Project Title
 
-A simple Todo App that lets you add, track, and manage your daily tasks.
+![React](https://img.shields.io/badge/React-19-blue)
+![Vite](https://img.shields.io/badge/Vite-7-purple)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-## Installation Instructions
+Short project overview here.
+
+Explain what the application does, who it’s for, and what problem it solves.
+
+---
+
+## Live Demo
+
+[View Live Demo](your-live-demo-link-here)
+
+---
+
+## Screenshots
+
+### Desktop View
+
+_Add screenshot here_
+
+### Mobile View
+
+_Add screenshot here_
+
+### Feature Demo (Optional)
+
+_Add GIF or screenshot here_
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Why I Built This](#why-i-built-this)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Technologies Used](#technologies-used)
+- [Design Decisions](#design-decisions)
+- [Challenges Faced](#challenges-faced)
+- [Future Improvements](#future-improvements)
+- [License](#license)
+- [Contact](#contact)
+
+---
+
+## Features
+
+- Feature one
+- Feature two
+- Feature three
+- Feature four
+
+---
+
+## Why I Built This
+
+Explain why you built this project.
+
+What were you trying to learn or improve?
+
+---
+
+## Installation
 
 ### Prerequisites
 
-Before getting started, make sure you have the following latest dependencies installed:
+#### NVM
 
-1. **nvm** (Node Version Manager) — used to manage Node.js versions
+```bash
+nvm -v
+```
 
-   ```bash
-   nvm -v
-   ```
+#### Node.js
 
-2. **Node.js** — the runtime required to run the app
+```bash
+node -v
+```
 
-   ```bash
-   node -v
-   ```
+#### npm
 
-3. **npm** (Node Package Manager) — comes with Node.js, used to install dependencies
-   ```bash
-   npm -v
-   ```
+```bash
+npm -v
+```
 
-### Getting Started
+---
 
-1. Clone this repository
+### Clone the repository
 
-   ```bash
-   git clone https://github.com/ebordenave/ctd-todo-list-2026.git
-   ```
+```bash
+git clone ctd-todo-list-2026
+```
 
-2. Navigate into the project folder
+### Navigate into the project
 
-   ```bash
-   cd ctd-todo-list-2026
-   ```
+```bash
+cd your-project-name
+```
 
-3. Install dependencies
+### Install dependencies
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-4. Start the app
-   ```bash
-   npm run dev
-   ```
+### Run the development server
+
+```bash
+npm run dev
+```
+
+---
+
+## Usage
+
+Describe how to use the application.
+
+Example:
+
+1. First action
+2. Second action
+3. Third action
+4. Fourth action
+
+---
+
+## Available Scripts
+
+### `npm run dev`
+
+Explain what this script does.
+
+---
+
+### `npm run build`
+
+Explain what this script does.
+
+---
+
+### `npm run preview`
+
+Explain what this script does.
+
+---
+
+## Project Structure
+
+```text
+src/
+├── components/
+├── features/
+├── pages/
+├── hooks/
+├── reducers/
+├── utils/
+└── App.jsx
+```
+
+Brief explanation of your folder organization.
+
+---
+
+## Technologies Used
+
+- Technology one
+- Technology two
+- Technology three
+- Technology four
+
+---
+
+## Design Decisions
+
+### State Management
+
+Explain your approach and why.
+
+---
+
+### Security / Validation
+
+Explain how you handle user input or data validation.
+
+---
+
+### Styling Approach
+
+Explain your styling decisions.
+
+---
+
+### Architecture
+
+Explain any notable architectural patterns.
+
+---
+
+## Challenges Faced
+
+Describe challenges you encountered.
+
+What was difficult?
+
+How did you solve it?
+
+What did you learn?
+
+---
+
+## Future Improvements
+
+- Improvement one
+- Improvement two
+- Improvement three
+- Improvement four
+
+---
+
+## License
+
+This project is licensed under the **MIT** License.
+
+See the `LICENSE` file for details.
+
+---
+
+## Contact
+
+**Edward Bordenave**
+
+GitHub: www.github.com/ebordenave
+
+LinkedIn: www.linkedin.com/in/ebordenave
+
+Email: edward.bordenave@gmail.com
