@@ -42,6 +42,9 @@ export const CONTROL_BAR_SCHEME = {
   widthFull: `w-full`,
   widthHalf: `w-1/2`,
   widthQuarter: `w-1/4`,
+
+  errorAlert: `col-span-2 w-full mb-2 p-3 bg-red-50 border border-red-200 text-red-800 text-sm rounded-xl flex items-center justify-between shadow-sm`,
+  errorButton: `text-xs font-semibold underline hover:text-red-900 ml-4 transition-colors`,
 }
 
 export const PAGE_SCHEME = {
@@ -67,7 +70,7 @@ export const PROFILE_SCHEME = {
 
 export const NOT_FOUND_SCHEME = {
   wrapper: `flex flex-col items-center p-6 max-w-2xl mx-auto`,
-  title: `text-7xl text-center text-[var(--accent-hover)]`,
+  title: `text-7xl text-center text-[var(--accent-color)]`,
   subtitle: `font-bold text-zinc-500 text-xl text-center`,
   description: `font-semibold  text-center text-zinc-500`,
 }

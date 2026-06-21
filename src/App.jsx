@@ -13,7 +13,6 @@ function App() {
   return (
     <div className="min-h-screen bg-zinc-50 py-12">
       <div className="max-w-xl mx-auto w-full px-8 border border-zinc-100 rounded-xl bg-white shadow-md">
-        {/* <Header /> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />

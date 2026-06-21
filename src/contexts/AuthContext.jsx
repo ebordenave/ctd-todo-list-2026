@@ -1,8 +1,10 @@
 import React, { useState, createContext, useContext } from 'react'
 import { useNavigate } from 'react-router'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext()
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default function useAuth() {
   const context = useContext(AuthContext)
   if (!context) {

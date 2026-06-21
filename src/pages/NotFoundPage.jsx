@@ -19,7 +19,7 @@ export default function NotFoundPage() {
         <p className={NOT_FOUND_SCHEME.description}>
           The page you are looking for does not exist.
         </p>
-        <div className="flex flex-row justify-between gap-4">
+        <div className="flex flex-row justify-between gap-4 my-4">
           <button
             className={BUTTON_SCHEME.secondary}
             onClick={() => navigate(-1)}
