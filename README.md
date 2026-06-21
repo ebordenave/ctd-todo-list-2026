@@ -1,19 +1,17 @@
-# Project Title
+# Code The Dream Todo App
 
 ![React](https://img.shields.io/badge/React-19-blue)
 ![Vite](https://img.shields.io/badge/Vite-7-purple)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
-Short project overview here.
-
-Explain what the application does, who it’s for, and what problem it solves.
+This is a simple todo app that allows a user to manage daily tasks. This app allows helps users stay organized by providing a straight-forward way to create, read, update and delete todos all in one place with a minimalist, feature rich user-interface.
 
 ---
 
 ## Live Demo
 
-[View Live Demo](your-live-demo-link-here)
+[View Live Demo](your-live-demo-link-here) (WIP)
 
 ---
 
@@ -21,7 +19,15 @@ Explain what the application does, who it’s for, and what problem it solves.
 
 ### Desktop View
 
-_Add screenshot here_
+<img src="src/assets/screenshot-6.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-1.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-2.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-3.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-4.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-5.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-7.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-8.png" alt="Description of image" width="400" />
+<img src="src/assets/screenshot-9.png" alt="Description of image" width="400" />
 
 ### Mobile View
 
@@ -29,7 +35,9 @@ _Add screenshot here_
 
 ### Feature Demo (Optional)
 
-_Add GIF or screenshot here_
+<img src="src/assets/recording-1.gif" alt="Description of image" width="400" />
+
+<img src="src/assets/recording-2.gif" alt="Description of image" width="400" />
 
 ---
 
