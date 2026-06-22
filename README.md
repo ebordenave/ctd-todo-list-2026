@@ -11,7 +11,7 @@ This is a simple todo app that allows a user to manage daily tasks. This app all
 
 ## Live Demo
 
-[View Live Demo](your-live-demo-link-here) (WIP)
+[View Live Demo](https://ctd-todo-list-2026.vercel.app/login)
 
 ---
 
