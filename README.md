@@ -225,11 +225,13 @@ The goal is to create an intuitive structure that makes it easier for developers
 
 To improve the user experience, this application uses an optimistic update pattern for certain actions. Instead of waiting for the server to confirm a request before updating the UI, the application immediately updates local state and assumes success. If the request fails, the state can be rolled back or corrected. This makes the app feel faster and more responsive while reducing perceived latency.
 
+---
+
 ### State Management
 
 Depending on the type of state, the decision to use a reducer or a simple `useState` came down to how that state was being used and shared throughout the application. What I realized during this project is that centralization and modularity make managing a codebase much easier, especially as complexity grows.
 
-To me, `useReducer` feels a lot like a state machine—state changes are organized into specific action types, and those actions trigger predictable transitions through the reducer. This makes complex or shared state easier to reason about because the logic lives in one place.
+To me, `useReducer` feels a lot like a state machine, state changes are organized into specific action types, and those actions trigger predictable transitions through the reducer. This makes complex or shared state easier to reason about because the logic lives in one place.
 
 `useState`, on the other hand, feels better suited for simpler, localized pieces of state where the logic is straightforward. It manages values directly through setter functions, and when combined with `useEffect`, can react to state changes through dependency tracking.
 
@@ -247,11 +249,11 @@ On the validation side, form inputs are checked before submission to ensure the 
 
 ### Styling Approach
 
-The styling approach I used for this application was Tailwind CSS. Going into this project, I was skeptical of it. My previous experience was with CSS Modules and Sass, which felt more intuitive to me because of the separation of concerns principle—keeping components and their styles bundled together in a structured way.
+The styling approach I used for this application was Tailwind CSS. Going into this project, I was skeptical of it. My previous experience was with CSS Modules and Sass, which felt more intuitive to me because of the separation of concerns principle, keeping components and their styles bundled together in a structured way.
 
 What I did not fully appreciate at first was how difficult traditional CSS can become as applications grow. Managing nested containers, understanding styling hierarchy, and tracing where styles originate can quickly become frustrating. Tailwind addresses a lot of that by keeping styling closer to the component itself, though it comes with its own learning curve.
 
-My biggest breakthrough came when I started creating reusable style objects for common UI patterns. This allowed me to import those patterns where needed and maintain a single source of truth for styling decisions. That was the moment Tailwind really “clicked” for me—creating a `theme-config` utility to centralize and manage my styling patterns made the entire system feel more scalable, consistent, and easier to maintain.
+My biggest breakthrough came when I started creating reusable style objects for common UI patterns. This allowed me to import those patterns where needed and maintain a single source of truth for styling decisions. That was the moment Tailwind really “clicked” for me, creating a `theme-config` utility to centralize and manage my styling patterns made the entire system feel more scalable, consistent, and easier to maintain.
 
 ---
 
