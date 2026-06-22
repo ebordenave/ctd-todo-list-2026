@@ -215,7 +215,11 @@ function TodosPage() {
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_ERROR,
-        payload: { message: error.message, sanitizedEditedTodo, originalTodo },
+        payload: {
+          message: error.message,
+          todoId: sanitizedEditedTodo.id,
+          originalTodo,
+        },
       })
     }
   }

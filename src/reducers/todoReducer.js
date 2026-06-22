@@ -140,7 +140,7 @@ export function todoReducer(state, action) {
         error: '',
         filterError: '',
         todoList: state.todoList.map((currentTodo) => {
-          return currentTodo.id === action.payload.id
+          return currentTodo.id === action.payload.todoId
             ? { ...currentTodo, ...action.payload }
             : currentTodo
         }),

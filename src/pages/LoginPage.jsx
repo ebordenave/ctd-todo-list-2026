@@ -43,9 +43,9 @@ export default function LoginPage() {
   return (
     <div className="px-8 pt-8 pb-10">
       <div className="flex items-center gap-2 justify-center mb-6">
-        <SquareCheckBig className="text-[oklch(45%_0.24_264)]" size={28} />
+        <SquareCheckBig className="text-[var(--accent-color)]" size={28} />
         <h1 className="text-2xl font-bold text-zinc-800">
-          My<span className="text-[oklch(45%_0.24_264)]">Todos</span>
+          My<span className="text-[var(--accent-color)]">Todos</span>
         </h1>
       </div>
 
@@ -69,9 +69,10 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            maxLength={100}
             disabled={isLoggingOn}
             autoComplete="email"
-            className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-zinc-800 focus:outline-none focus:ring-2 focus:ring-[oklch(45%_0.24_264)] focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-zinc-800 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] focus:border-transparent transition-all disabled:opacity-50"
           />
         </div>
 
@@ -88,16 +89,17 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            maxLength={100}
             disabled={isLoggingOn}
             autoComplete="current-password"
-            className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-zinc-800 focus:outline-none focus:ring-2 focus:ring-[oklch(45%_0.24_264)] focus:border-transparent transition-all disabled:opacity-50"
+            className="w-full px-3 py-2 border border-zinc-300 rounded-lg text-zinc-800 focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] focus:border-transparent transition-all disabled:opacity-50"
           />
         </div>
 
         <button
           type="submit"
           disabled={isLoggingOn}
-          className="w-full mt-2 py-2 px-4 bg-[oklch(45%_0.24_264)] hover:bg-[oklch(40%_0.24_264)] text-white font-medium rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[oklch(45%_0.24_264)] disabled:opacity-50 cursor-pointer"
+          className="w-full mt-2 py-2 px-4 bg-[var(--accent-color)] hover:brightness-90 text-white font-medium rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--accent-color)] disabled:opacity-50 cursor-pointer"
         >
           {isLoggingOn ? 'Logging in...' : 'Log On'}
         </button>
