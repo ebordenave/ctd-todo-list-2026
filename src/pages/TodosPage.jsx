@@ -4,10 +4,11 @@ import {
   TODO_ACTIONS,
 } from '../reducers/todoReducer'
 import DOMPurify from 'dompurify'
+import { StickyNoteX } from 'lucide-react'
 
 import { useReducer, useEffect, useState } from 'react'
 import TodoList from '../features/Todos/TodoList/TodoList'
-import TodoForm from '../features/Todos/TodoForm'
+// import TodoForm from '../features/Todos/TodoForm'
 import SortBy from '../shared/SortBy'
 import useDebounce from '../hooks/useDebounce'
 import FilterInput from '../shared/FilterInput'
@@ -21,6 +22,7 @@ import { SquareCheckBig, UserCircle } from 'lucide-react'
 import { useSearchParams } from 'react-router'
 import StatusFilter from '../shared/StatusFilter'
 import GradientSpinner from '../shared/GradientSpinner'
+import EmptyState from '../shared/EmptyState'
 
 function TodosPage() {
   const { token } = useAuth()
@@ -206,8 +208,12 @@ function TodosPage() {
         }),
       })
 
+      // throw new Error('Task Failed to update')
+
       if (!response.ok) throw new Error('Failed to update task')
+
       const finalizedTodo = await response.json()
+
       dispatch({
         type: TODO_ACTIONS.UPDATE_TODO_SUCCESS,
         payload: finalizedTodo,
@@ -271,7 +277,9 @@ function TodosPage() {
   return (
     <div>
       <Header />
-      <h1 className="text-2xl font-normal text-zinc-800 mb-4">My Tasks</h1>
+      <h1 className="text-2xl md:text-3xl font-normal text-zinc-800 mb-4">
+        My Tasks
+      </h1>
       {toast.message && (
         <div
           className={`mb-4 p-3 rounded-md border shadow-sm transition-all ${toastBgColor}`}
@@ -335,6 +343,12 @@ function TodosPage() {
         )}
       </div>
       <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+        {/* <EmptyState
+          title={'Title'}
+          icon={<StickyNoteX size={60} />}
+          message={'message here'}
+        /> */}
+
         <TodoList
           todoList={Array.isArray(todoList) ? todoList : []}
           onCompleteTodo={completeTodo}

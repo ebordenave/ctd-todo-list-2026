@@ -5,6 +5,7 @@ function FilterInput({ filterTerm, onFilterChange }) {
     <>
       <label htmlFor="filterInput">
         <Search size={16} />
+        <span className="sr-only">Search Todos</span>
       </label>
       <input
         type="text"

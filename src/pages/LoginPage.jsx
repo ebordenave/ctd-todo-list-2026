@@ -103,6 +103,7 @@ export default function LoginPage() {
         >
           {isLoggingOn ? 'Logging in...' : 'Log On'}
         </button>
+        <h4>Don't have an account? Sign up</h4>
       </form>
     </div>
   )
