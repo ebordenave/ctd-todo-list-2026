@@ -53,6 +53,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
                 onChange={handleEdit}
                 elementId={`editTodo${todo.id}`}
                 ref={inputRef}
+                maxLength={100}
               />
               <div className={'flex flex-row space-x-4 shrink-0'}>
                 <button
@@ -117,6 +118,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo, onDeleteTodo }) {
                 onClick={handleDelete}
               >
                 <Trash2 size={24} />
+                <span className="sr-only">Delete Todos</span>
               </button>
             </div>
           </div>

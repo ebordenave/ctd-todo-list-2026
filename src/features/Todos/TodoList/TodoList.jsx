@@ -35,6 +35,10 @@ function TodoList({
     }
   }
 
+  const getEmptyState = () => {
+    return
+  }
+
   if (filteredTodoList.todos.length === 0) {
     return <p>{getEmptyMessage()}</p>
   }

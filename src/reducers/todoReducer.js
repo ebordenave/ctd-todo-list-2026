@@ -162,7 +162,7 @@ export function todoReducer(state, action) {
         ...state,
         isTodoListLoading: false,
         todoList: state.todoList.map((currentTodo) => {
-          return currentTodo.id === action.payload.editedTodo.id
+          return currentTodo.id === action.payload.todoId
             ? action.payload.originalTodo
             : currentTodo
         }),

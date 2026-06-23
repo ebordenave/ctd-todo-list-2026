@@ -13,15 +13,46 @@ export const HEADER_SCHEME = {
 export const CARD_SCHEME = {
   container: `flex flex-row justify-between gap-4 border border-zinc-100 rounded-xl p-4 bg-white shadow-sm dark:bg-gray-700 `,
 }
+export const EMPTY_STATE_SCHEME = {
+  container: `flex flex-col items-center border border-4 border-dashed border-blue-300 bg-blue-50 rounded-xl gap-4 p-4`,
+}
+
+const BUTTON_BASE = `
+  py-2.5
+  px-4
+  rounded-xl
+  transition-colors
+  text-center
+  outline-none
+  focus-visible:ring-2
+  focus-visible:ring-blue-500
+  focus-visible:ring-offset-2
+`
 
 export const BUTTON_SCHEME = {
-  button: `self-end mt-4 px-4 py-3 bg-[var(--accent-color)] text-white font-medium rounded-xl hover:bg-[var(--accent-hover)] transition-colors shadow-sm`,
+  primary: `
+    ${BUTTON_BASE}
+    bg-[var(--accent-color)]
+    text-white
+    font-medium
+    hover:bg-[var(--accent-hover)]
+    disabled:opacity-50
+    disabled:cursor-not-allowed
+  `,
 
-  primary: `py-2.5 bg-[var(--accent-color)] text-white font-medium rounded-xl hover:bg-[var(--accent-hover)] transition-colors text-center px-4 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-color)]`,
+  secondary: `
+    ${BUTTON_BASE}
+    border
+    border-zinc-200
+    text-zinc-600
+    hover:bg-zinc-50
+  `,
 
-  secondary: `py-2.5 border border-zinc-200 text-zinc-600 rounded-xl hover:bg-zinc-50 transition-colors text-center px-4 focus:outline-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-color)]`,
-
-  taskMenu: `text-zinc-400 hover:text-zinc-600 text-4xl`,
+  taskMenu: `
+    text-zinc-400
+    hover:text-zinc-600
+    text-4xl
+  `,
 }
 
 export const NAV_SCHEME = {
@@ -33,7 +64,7 @@ export const NAV_SCHEME = {
 }
 
 export const CONTROL_BAR_SCHEME = {
-  container: `grid grid-cols-[max-content_1fr] items-center gap-x-4 gap-y-3 w-full mb-4`,
+  container: `grid grid-cols-[max-content_1fr] items-center gap-x-4 gap-y-3 w-full mb-4 md:gap-y-4`,
 
   input: `w-full h-10 px-4 border border-zinc-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] bg-white text-sm transition-all`,
 
