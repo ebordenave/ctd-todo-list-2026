@@ -23,26 +23,6 @@ function TodoList({
     }
   }, [todoList, dataVersion, statusFilter])
 
-  const getEmptyMessage = () => {
-    switch (statusFilter) {
-      case 'completed':
-        return 'No completed todos yet. Complete some tasks to see them here.'
-      case 'active':
-        return 'No active todos. Add a todo above to get started.'
-      case 'all':
-      default:
-        return 'Add todo below to get started.'
-    }
-  }
-
-  const getEmptyState = () => {
-    return
-  }
-
-  if (filteredTodoList.todos.length === 0) {
-    return <p>{getEmptyMessage()}</p>
-  }
-
   return (
     <ul className="space-y-4">
       {filteredTodoList.todos.map((todo) => (
