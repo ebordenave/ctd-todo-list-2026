@@ -269,10 +269,34 @@ function TodosPage() {
       payload: { filterTerm: newTerm },
     })
   }
+
   const toastBgColor =
     toast.type === 'deleted'
       ? 'bg-red-50 text-red-800 border-red-200'
       : 'bg-emerald-100 text-emerald-800 border-emerald-200'
+
+  const getEmptyStateData = (statusFilter) => {
+    const stateObj = {
+      active: {
+        icon: '✅',
+        title: 'No active todos',
+        message: 'Add a todo above to get started.',
+      },
+      completed: {
+        icon: '📝',
+        title: 'No completed todos yet.',
+        message: 'Complete some tasks to see them here.',
+      },
+      all: {
+        icon: '📋',
+        title: 'No todos.',
+        message: 'Add todo below to get started.',
+      },
+    }
+    return stateObj[statusFilter]
+  }
+
+  const emptyState = getEmptyStateData(statusFilter)
 
   return (
     <div>
@@ -343,20 +367,22 @@ function TodosPage() {
         )}
       </div>
       <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-        {/* <EmptyState
-          title={'Title'}
-          icon={<StickyNoteX size={60} />}
-          message={'message here'}
-        /> */}
-
-        <TodoList
-          todoList={Array.isArray(todoList) ? todoList : []}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-          onDeleteTodo={deleteTodo}
-          dataVersion={dataVersion}
-          statusFilter={statusFilter}
-        />
+        {todoList.length === 0 ? (
+          <EmptyState
+            icon={emptyState.icon}
+            title={emptyState.title}
+            message={emptyState.message}
+          />
+        ) : (
+          <TodoList
+            todoList={Array.isArray(todoList) ? todoList : []}
+            onCompleteTodo={completeTodo}
+            onUpdateTodo={updateTodo}
+            onDeleteTodo={deleteTodo}
+            dataVersion={dataVersion}
+            statusFilter={statusFilter}
+          />
+        )}
       </div>
       <button
         type="button"
