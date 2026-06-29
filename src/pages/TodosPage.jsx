@@ -8,7 +8,6 @@ import { StickyNoteX } from 'lucide-react'
 
 import { useReducer, useEffect, useState } from 'react'
 import TodoList from '../features/Todos/TodoList/TodoList'
-// import TodoForm from '../features/Todos/TodoForm'
 import SortBy from '../shared/SortBy'
 import useDebounce from '../hooks/useDebounce'
 import FilterInput from '../shared/FilterInput'
@@ -149,6 +148,22 @@ function TodosPage() {
     }
   }
 
+  function doesTodoBelongInFilter(statusFilter, todo) {
+    switch (statusFilter) {
+      case 'active':
+        return !todo.isCompleted
+
+      case 'completed':
+        return todo.isCompleted
+
+      case 'all':
+        return true
+
+      default:
+        return false
+    }
+  }
+
   async function completeTodo(id) {
     const todo = todoList.find((todo) => todo.id === id)
     if (!todo) return
@@ -167,11 +182,20 @@ function TodosPage() {
       })
 
       if (!response.ok) throw new Error('Failed to update status')
+
       const finalizedTodo = await response.json()
-      dispatch({
-        type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS,
-        payload: finalizedTodo,
-      })
+
+      if (doesTodoBelongInFilter(statusFilter, finalizedTodo)) {
+        dispatch({
+          type: TODO_ACTIONS.COMPLETE_TODO_SUCCESS,
+          payload: finalizedTodo,
+        })
+      } else {
+        dispatch({
+          type: TODO_ACTIONS.REMOVE_TODO_FROM_VIEW,
+          payload: { id: finalizedTodo.id },
+        })
+      }
     } catch (error) {
       dispatch({
         type: TODO_ACTIONS.COMPLETE_TODO_ERROR,
