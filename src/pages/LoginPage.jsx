@@ -103,6 +103,14 @@ export default function LoginPage() {
         >
           {isLoggingOn ? 'Logging in...' : 'Log On'}
         </button>
+        <div className="flex items-center gap-3 m-4">
+          <div className="flex-1 h-px bg-gradient-to-r from-white via-blue-300 to-blue-300" />
+          <span className="text-[11px] text-blue-400 uppercase tracking-widest">
+            OR
+          </span>
+          <div className="flex-1 h-px bg-gradient-to-r from-blue-300 via-blue-300 to-white" />
+        </div>
+        <div>[ Try Demo Account ]</div>
         <h4>Don't have an account? Sign up</h4>
       </form>
     </div>

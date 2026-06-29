@@ -19,6 +19,8 @@ export const TODO_ACTIONS = {
   DELETE_TODO_SUCCESS: 'DELETE_TODO_SUCCESS',
   DELETE_TODO_ERROR: 'DELETE_TODO_ERROR',
 
+  REMOVE_TODO_FROM_VIEW: 'REMOVE_TODO_FROM_VIEW',
+
   SET_SORT: 'SET_SORT',
   SET_FILTER: 'SET_FILTER',
   CLEAR_ERROR: 'CLEAR_ERROR',
@@ -234,6 +236,14 @@ export function todoReducer(state, action) {
         filterError: '',
         isTodoListLoading: false,
         todoList: [action.payload.currentTodo, ...state.todoList],
+      }
+
+    case TODO_ACTIONS.REMOVE_TODO_FROM_VIEW:
+      return {
+        ...state,
+        todoList: state.todoList.filter((todo) => {
+          return todo.id !== action.payload.id
+        }),
       }
 
     default:
