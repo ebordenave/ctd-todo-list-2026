@@ -1,6 +1,6 @@
 import { SquareCheckBig, UserCircle } from 'lucide-react'
 import Logoff from '../features/Logoff'
-import Logon from '../features/Logon'
+// import Logon from '../features/Logon'
 import useAuth from '../contexts/AuthContext'
 import Navigation from './Navigation'
 import { HEADER_SCHEME } from '../utils/theme-config'
@@ -31,7 +31,7 @@ function Header() {
               </div>
             </div>
           ) : (
-            <Logon />
+            <button>Login</button>
           )}
         </div>
       </div>

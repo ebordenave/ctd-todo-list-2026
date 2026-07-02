@@ -20,7 +20,7 @@ export const EMPTY_STATE_SCHEME = {
 const BUTTON_BASE = `
   py-2.5
   px-4
-  rounded-xl
+  rounded-full
   transition-colors
   text-center
   outline-none
@@ -53,6 +53,8 @@ export const BUTTON_SCHEME = {
     hover:text-zinc-600
     text-4xl
   `,
+
+  demo: 'flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-green-500 text-white font-medium shadow-md transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 hover:scale-[1.02] active:scale-[0.98]',
 }
 
 export const NAV_SCHEME = {
